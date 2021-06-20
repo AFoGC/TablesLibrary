@@ -63,6 +63,10 @@ namespace TablesLibrary.Interpreter
 						}
 
 					}
+                    if (tables.Count != 0)
+                    {
+						counter = tables[tables.Count - 1].ID;
+					}
 					return true;
 				}
 				else
@@ -109,6 +113,18 @@ namespace TablesLibrary.Interpreter
 			}
 			return null;
 		}
+
+		public Table GetTable(Type type)
+        {
+            foreach (Table table in tables)
+            {
+                if (table.DataType == type)
+                {
+					return table;
+                }
+            }
+			return null;
+        }
 
 		public Table getTable(String name)
 		{

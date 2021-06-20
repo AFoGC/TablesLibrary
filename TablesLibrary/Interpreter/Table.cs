@@ -14,7 +14,7 @@ namespace TablesLibrary.Interpreter
 		protected List<Cell> cells = new List<Cell>();
 		protected Type dataType = typeof(Cell);
 
-		private int lastId = 0;
+		private int counter = 0;
 
 		public int ID
 		{
@@ -30,11 +30,6 @@ namespace TablesLibrary.Interpreter
 		public List<Cell> Cells
 		{
 			get { return cells; }
-		}
-		public int LastID
-		{
-			set { lastId = value; }
-			get { return lastId; }
 		}
 
 		public Table(Cell type)
@@ -63,6 +58,15 @@ namespace TablesLibrary.Interpreter
 				return true;
 			}
 			return false;
+		}
+
+		public bool addElement()
+        {
+			Cell cell = (Cell)Activator.CreateInstance(this.dataType);
+			cell.ID = ++counter;
+			cells.Add(cell);
+
+			return true;
 		}
 
 		public void saveTable(StreamWriter streamWriter)
@@ -117,6 +121,10 @@ namespace TablesLibrary.Interpreter
 					}
 				}
 			}
+            if (cells.Count != 0)
+            {
+				counter = cells[cells.Count - 1].ID;
+			}
 		}
 
 		public Cell getElemnt(int index)
@@ -130,6 +138,19 @@ namespace TablesLibrary.Interpreter
 			}
 			return null;
 		}
+
+		public bool updateElement(Cell cell)
+        {
+            for (int i = 0; i < cells.Count; i++)
+            {
+                if (cells[i].ID == cell.ID)
+                {
+					cells[i] = cell;
+					return true;
+                }
+            }
+			return false;
+        }
 
 		public String tableDeclaration(int countOfTabulations)
 		{
