@@ -77,9 +77,9 @@ namespace TablesLibrary.Interpreter
 		}
 
 
-		//--------------------------------------------------------------------------------------
+		//--------------------------------------formatParam static methods------------------------------------------------
 
-		public static String formatParam(String variableName, int item, int countOftabulations)
+		public static String formatParam(String variableName, int item, int countOfTabulations)
 		{
 			String export = formatToString(item);
 			
@@ -89,10 +89,9 @@ namespace TablesLibrary.Interpreter
             }
             else
             {
-				//export = "<" + variableName + ": " + export + ">\n";
 				export = formatComand(variableName, export);
 
-                for (int i = 0; i < countOftabulations; i++)
+                for (int i = 0; i < countOfTabulations; i++)
                 {
 					export = "\t" + export;
                 }
@@ -100,24 +99,8 @@ namespace TablesLibrary.Interpreter
             }
 		}
 
-		public static String formatParam(String variableName, sbyte item, int countOftabulations)
+		public static String formatParam(String variableName, sbyte item, int countOfTabulations)
 		{
-			/*
-			if (item == -1)
-			{
-				return "";
-			}
-			else
-			{
-				String export = "";
-				for (int i = 0; i < countOftabulations; i++)
-				{
-					export = export + "\t";
-				}
-
-				return export + "<" + variableName + ": " + item.ToString() + ">\n";
-			}
-			*/
 			String export = formatToString(item);
             if (export == "")
             {
@@ -127,7 +110,7 @@ namespace TablesLibrary.Interpreter
             {
 				export = formatComand(variableName, export);
 
-                for (int i = 0; i < countOftabulations; i++)
+                for (int i = 0; i < countOfTabulations; i++)
                 {
 					export = "\t" + export;
                 }
@@ -138,73 +121,55 @@ namespace TablesLibrary.Interpreter
 
 		public static String formatParam(String variableName, String item, int countOfTabulations)
 		{
-			if (item != "")
+			String export = formatToString(item);
+			if (export == "")
 			{
-				String export = "";
+				return "";
+			}
+            else
+            {
+				export = formatComand(variableName, export);
 				for (int i = 0; i < countOfTabulations; i++)
 				{
-					export = export + "\t";
+					export = "\t" + export;
 				}
-				return export + "<" + variableName + ": " + item + ">\n";
+
+				return export;
 			}
-			return "";
 		}
 
 		public static String formatParam(String variableName, bool item, int countOfTabulations)
 		{
-			String export = "";
+			String export = formatToString(item);
+			export = formatComand(variableName, export);
+
 			for (int i = 0; i < countOfTabulations; i++)
 			{
-				export = export + "\t";
+				export = "\t" + export;
 			}
 
-			return export + "<" + variableName + ": " + item.ToString() + ">\n";
+			return export;
 		}
 		
 		public static String formatParam(String variableName, DateTime item, int countOfTabulations)
 		{
-            if (item.Year == 1)
+
+			String export = formatToString(item);
+            if (export == "")
             {
 				return "";
             }
             else
             {
-				String export = "";
+				export = formatComand(variableName, export);
 				for (int i = 0; i < countOfTabulations; i++)
 				{
-					export = export + "\t";
+					export = "\t" + export;
 				}
 
-				return export + "<" + variableName + ": " + formatDate(item) + ">\n";
+				return export;
 			}
 		}
-
-		private static String formatDate(DateTime date)
-        {
-			String export = "";
-
-            if (date.Day < 10)
-            {
-				export = export + "0" + date.Day.ToString();
-            }
-            else
-            {
-				export = export + date.Day.ToString();
-            }
-			export = export + ".";
-
-            if (date.Month < 10)
-            {
-				export = export + "0" + date.Month.ToString();
-			}
-            else
-            {
-				export = export + date.Month.ToString();
-			}
-			export = export + ".";
-
-			return export + date.Year.ToString();
-        }
 
 		private static String formatComand(String parametr, String argument)
         {
@@ -221,7 +186,7 @@ namespace TablesLibrary.Interpreter
 			return export + "<" + type.Name + ">\n";
 		}
 
-		//---------------------------------------------------------------------
+		//--------------------------------formatToString static methods-------------------------------------
 
 		public static String formatToString(int item)
 		{
@@ -252,6 +217,11 @@ namespace TablesLibrary.Interpreter
 			return item;
         }
 
+		public static String formatToString(bool item)
+        {
+			return item.ToString();
+        }
+
 		public static String formatToString(DateTime date)
         {
             if (date.Year == 1)
@@ -264,7 +234,34 @@ namespace TablesLibrary.Interpreter
 			}
         }
 
-		//---------------------------------------------------------------------
+		private static String formatDate(DateTime date)
+		{
+			String export = "";
+
+			if (date.Day < 10)
+			{
+				export = export + "0" + date.Day.ToString();
+			}
+			else
+			{
+				export = export + date.Day.ToString();
+			}
+			export = export + ".";
+
+			if (date.Month < 10)
+			{
+				export = export + "0" + date.Month.ToString();
+			}
+			else
+			{
+				export = export + date.Month.ToString();
+			}
+			export = export + ".";
+
+			return export + date.Year.ToString();
+		}
+
+		//---------------------------get data static methods------------------------------------------
 
 		public static DateTime readDate(String data)
         {
