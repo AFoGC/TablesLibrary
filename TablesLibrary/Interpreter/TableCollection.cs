@@ -157,9 +157,22 @@ namespace TablesLibrary.Interpreter
 			{
 				if (tables[i].ID == id)
 				{
-					tables.Remove(tables[i]);
+					tables.RemoveAt(i);
 					return true;
 				}
+			}
+			return false;
+		}
+
+		public bool removeTable(Type type)
+		{
+			for (int i = 0; i < tables.Count; i++)
+			{
+                if (tables[i].DataType == type)
+                {
+					tables.RemoveAt(i);
+					return true;
+                }
 			}
 			return false;
 		}

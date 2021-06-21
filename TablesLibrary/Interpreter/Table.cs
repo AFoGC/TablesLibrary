@@ -27,7 +27,7 @@ namespace TablesLibrary.Interpreter
 			get { return dataType; }
 			private set
             {
-                if (value.BaseType == dataType)
+                if (value.BaseType == dataType || value == dataType)
                 {
 					dataType = value;
                 }
@@ -73,8 +73,8 @@ namespace TablesLibrary.Interpreter
 
 		public bool addElement()
         {
-			Cell cell = (Cell)Activator.CreateInstance(this.dataType);
-			cell.ID = ++counter;
+			Cell cell = (Cell)Activator.CreateInstance(this.dataType, ++counter);
+			//cell.ID = ++counter;
 			cells.Add(cell);
 
 			return true;
