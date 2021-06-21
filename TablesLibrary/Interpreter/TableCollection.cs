@@ -97,7 +97,7 @@ namespace TablesLibrary.Interpreter
 			tables.Add(table);
 		}
 
-		public void AddTable(Cell type)
+		public void AddTable(Type type)
 		{
 			tables.Add(new Table(++counter, type));
 		}

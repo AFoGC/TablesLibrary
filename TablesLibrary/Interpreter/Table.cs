@@ -25,6 +25,17 @@ namespace TablesLibrary.Interpreter
 		public Type DataType
 		{
 			get { return dataType; }
+			private set
+            {
+                if (value.BaseType == dataType)
+                {
+					dataType = value;
+                }
+                else
+                {
+					throw new Exception("Не верно задан тип данных в таблице. Тип данных, который вы хотите задать в табличе должен быть унаследован от класса Cell");
+				}
+            }
 		}
 
 		public List<Cell> Cells
@@ -32,22 +43,22 @@ namespace TablesLibrary.Interpreter
 			get { return cells; }
 		}
 
-		public Table(Cell type)
+		public Table(Type type)
 		{
-			this.dataType = type.GetType();
+			DataType = type;
 		}
 
-		public Table(int id, Cell type)
+		public Table(int id, Type type)
 		{
 			this.id = id;
-			this.dataType = type.GetType();
+			DataType = type;
 		}
 
-		public Table(int id, String name, Cell type)
+		public Table(int id, String name, Type type)
 		{
 			this.id = id;
 			this.name = name;
-			this.dataType = type.GetType();
+			DataType = type;
 		}
 
 		public bool addElement(Cell item)
@@ -152,7 +163,7 @@ namespace TablesLibrary.Interpreter
 			return false;
         }
 
-		public String tableDeclaration(int countOfTabulations)
+		private String tableDeclaration(int countOfTabulations)
 		{
 			String export = "";
 			for (int i = 0; i < countOfTabulations; i++)
