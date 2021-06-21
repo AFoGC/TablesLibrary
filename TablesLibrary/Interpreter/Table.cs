@@ -18,7 +18,6 @@ namespace TablesLibrary.Interpreter
 
 		public int ID
 		{
-			set { id = value; }
 			get { return id; }
 		}
 
@@ -74,7 +73,6 @@ namespace TablesLibrary.Interpreter
 		public bool addElement()
         {
 			Cell cell = (Cell)Activator.CreateInstance(this.dataType, ++counter);
-			//cell.ID = ++counter;
 			cells.Add(cell);
 
 			return true;

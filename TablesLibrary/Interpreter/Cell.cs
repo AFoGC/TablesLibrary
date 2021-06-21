@@ -15,7 +15,6 @@ namespace TablesLibrary.Interpreter
 
 		public int ID
 		{
-			set { id = value; }
 			get { return id; }
 		}
 

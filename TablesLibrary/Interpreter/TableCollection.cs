@@ -91,12 +91,6 @@ namespace TablesLibrary.Interpreter
 			}
 		}
 
-		public void AddTable(Table table)
-		{
-			table.ID = ++counter;
-			tables.Add(table);
-		}
-
 		public void AddTable(Type type)
 		{
 			tables.Add(new Table(++counter, type));
