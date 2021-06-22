@@ -53,9 +53,8 @@ namespace TablesLibrary.Interpreter
 			}
 		}
 
-		public void loadCell(StreamReader streamReader)
+		public void loadCell(StreamReader streamReader, Comand comand)
 		{
-			Comand comand = new Comand();
 			bool endReading = false;
 
 			while (endReading == false)

@@ -48,7 +48,7 @@ namespace TablesLibrary.Interpreter
 									{
 										if (table.DataType.Name == comand.Argument)
 										{
-											table.loadTable(sr);
+											table.loadTable(sr, comand);
 										}
 									}
 									break;

@@ -93,9 +93,8 @@ namespace TablesLibrary.Interpreter
 			streamWriter.WriteLine();
 		}
 
-		public void loadTable(StreamReader streamReader)
+		public void loadTable(StreamReader streamReader, Comand comand)
 		{
-			Comand comand = new Comand();
 			bool endReading = false;
 			String dataName = dataType.Name;
 
@@ -107,7 +106,7 @@ namespace TablesLibrary.Interpreter
 					if (comand.Paramert == dataName)
 					{
 						Cell cell = (Cell)Activator.CreateInstance(this.dataType);
-						cell.loadCell(streamReader);
+						cell.loadCell(streamReader, comand);
 						cells.Add(cell);
 					}
 					else
