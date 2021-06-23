@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TablesLibrary.Interpreter
 {
-	public class Table//<Te> where Te : Cell, new()
+	public class Table
 	{
 		protected int id = 0;
 		public String name = "";
@@ -60,22 +60,50 @@ namespace TablesLibrary.Interpreter
 			DataType = type;
 		}
 
-		public bool addElement(Cell item)
-		{
-			if (item.GetType() == dataType)
-			{
-				cells.Add(item);
-				return true;
-			}
-			return false;
-		}
-
 		public bool addElement()
         {
 			Cell cell = (Cell)Activator.CreateInstance(this.dataType, ++counter);
 			cells.Add(cell);
 
 			return true;
+		}
+
+		public bool addElement(Cell import)
+        {
+            if (import.GetType() == this.DataType)
+            {
+				Cell cell = (Cell)Activator.CreateInstance(this.dataType, ++counter);
+                if (cell.UpdateThis(import))
+                {
+					cells.Add(cell);
+					return true;
+				}
+                else
+                {
+					return false;
+                }
+			}
+            else
+            {
+				return false;
+			}
+        }
+
+
+		public bool UpdateElement(Cell cell)
+		{
+			if (cell.GetType() == this.DataType)
+			{
+				for (int i = 0; i < cells.Count; i++)
+				{
+					if (cells[i].ID == cell.ID)
+					{
+						cells[i] = cell;
+						return true;
+					}
+				}
+			}
+			return false;
 		}
 
 		public void saveTable(StreamWriter streamWriter)
@@ -135,7 +163,7 @@ namespace TablesLibrary.Interpreter
 			}
 		}
 
-		public Cell getElemnt(int index)
+		public Cell GetElemnt(int index)
 		{
 			foreach (Cell item in cells)
 			{
@@ -146,19 +174,6 @@ namespace TablesLibrary.Interpreter
 			}
 			return null;
 		}
-
-		public bool updateElement(Cell cell)
-        {
-            for (int i = 0; i < cells.Count; i++)
-            {
-                if (cells[i].ID == cell.ID)
-                {
-					cells[i] = cell;
-					return true;
-                }
-            }
-			return false;
-        }
 
 		private String tableDeclaration(int countOfTabulations)
 		{

@@ -96,7 +96,7 @@ namespace TablesLibrary.Interpreter
 			tables.Add(new Table(++counter, type));
 		}
 
-		public Table getTable(int id)
+		public Table GetTable(int id)
 		{
 			foreach (Table table in tables)
 			{
@@ -120,7 +120,7 @@ namespace TablesLibrary.Interpreter
 			return null;
         }
 
-		public Table getTable(String name)
+		public Table GetTable(String name)
 		{
 			foreach (Table table in tables)
 			{
@@ -132,11 +132,11 @@ namespace TablesLibrary.Interpreter
 			return null;
 		}
 
-		public bool updateTable(Table import)
+		public bool UpdateTable(Table import)
 		{
 			for (int i = 0; i < tables.Count; i++)
 			{
-				if (tables[i].ID == import.ID)
+				if (tables[i].ID == import.ID && tables[i].DataType == import.DataType)
 				{
 					tables[i] = import;
 					return true;
@@ -145,7 +145,7 @@ namespace TablesLibrary.Interpreter
 			return false;
 		}
 
-		public bool removeTable(int id)
+		public bool RemoveTable(int id)
 		{
 			for (int i = 0; i < tables.Count; i++)
 			{
@@ -158,7 +158,7 @@ namespace TablesLibrary.Interpreter
 			return false;
 		}
 
-		public bool removeTable(Type type)
+		public bool RemoveTable(Type type)
 		{
 			for (int i = 0; i < tables.Count; i++)
 			{

@@ -28,6 +28,12 @@ namespace TablesLibrary.Interpreter
 			this.id = id;
 		}
 
+		
+		public virtual bool UpdateThis(Cell cell)
+        {
+			throw new Exception("Не был переписан метод UpdateThis для класса " + cell.GetType().Name);
+        }
+
 		protected virtual void saveBody(StreamWriter streamWriter)
 		{
 			streamWriter.Write(formatParam(nameof(id), id, 2));
