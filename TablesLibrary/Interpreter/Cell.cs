@@ -29,9 +29,23 @@ namespace TablesLibrary.Interpreter
 		}
 
 		
-		public virtual bool UpdateThis(Cell cell)
+		protected virtual void updateThisBody(Cell cell)
         {
-			throw new Exception("Не был переписан метод UpdateThis для класса " + cell.GetType().Name);
+			throw new Exception("Не был переписан метод updateThisBody для класса " + cell.GetType().Name);
+		}
+
+		public bool UpdateThis(Cell cell)
+        {
+            if (this.GetType() == cell.GetType())
+            {
+				updateThisBody(cell);
+
+				return true;
+            }
+            else
+            {
+				return false;
+            }
         }
 
 		protected virtual void saveBody(StreamWriter streamWriter)
