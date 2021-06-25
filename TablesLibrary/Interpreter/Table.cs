@@ -21,12 +21,17 @@ namespace TablesLibrary.Interpreter
 			get { return id; }
 		}
 
+		public int LastId
+        {
+            get { return counter; }
+        }
+
 		public Type DataType
 		{
 			get { return dataType; }
 			private set
             {
-                if (value.BaseType == dataType || value == dataType)
+                if (value.BaseType == dataType)
                 {
 					dataType = value;
                 }
@@ -163,7 +168,7 @@ namespace TablesLibrary.Interpreter
 			}
 		}
 
-		public Cell GetElemnt(int index)
+		public Cell GetElement(int index)
 		{
 			foreach (Cell item in cells)
 			{
@@ -174,6 +179,14 @@ namespace TablesLibrary.Interpreter
 			}
 			return null;
 		}
+
+		public Cell GetLastElement
+        {
+            get
+            {
+				return cells[cells.Count - 1];
+            }
+        }
 
 		private String tableDeclaration(int countOfTabulations)
 		{
