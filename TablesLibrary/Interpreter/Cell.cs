@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TablesLibrary.Interpreter
 {
-	public class Cell
+	public abstract class Cell
 	{
 		//
 		//
@@ -28,11 +28,10 @@ namespace TablesLibrary.Interpreter
 			this.id = id;
 		}
 
-		
-		protected virtual void updateThisBody(Cell cell)
-        {
-			throw new Exception("Не был переписан метод updateThisBody для класса " + cell.GetType().Name);
-		}
+
+		protected abstract void updateThisBody(Cell cell);
+		protected abstract void loadBody(Comand comand);
+		protected abstract void saveBody(StreamWriter streamWriter);
 
 		public bool UpdateThis(Cell cell)
         {
@@ -48,29 +47,11 @@ namespace TablesLibrary.Interpreter
             }
         }
 
-		protected virtual void saveBody(StreamWriter streamWriter)
-		{
-			streamWriter.Write(formatParam(nameof(id), id, 2));
-		}
-
 		public void saveCell(StreamWriter streamWriter)
 		{
 			streamWriter.Write(formatMark(this.GetType(), 1));
 			this.saveBody(streamWriter);
 			streamWriter.Write(formatMark(this.GetType(), 1));
-		}
-
-		protected virtual void loadBody(Comand comand)
-		{
-			switch (comand.Paramert)
-			{
-				case "id":
-					this.id = Convert.ToInt32(id);
-					break;
-
-				default:
-					break;
-			}
 		}
 
 		public void loadCell(StreamReader streamReader, Comand comand)
