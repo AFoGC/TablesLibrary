@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace TablesLibrary.Interpreter
 {
-	public class Table
+	public class Table<Te> where Te : Cell, new()
 	{
 		protected int id = 0;
-		public String name = "";
-		protected List<Cell> cells = new List<Cell>();
-		protected Type dataType = typeof(Cell);
+		protected String name = "";
+		protected List<Te> cells = new List<Te>();
 
 		private int counter = 0;
 
@@ -21,53 +20,36 @@ namespace TablesLibrary.Interpreter
 			get { return id; }
 		}
 
+		public String Name
+        {
+            get { return name; }
+        }
+
 		public int LastId
         {
             get { return counter; }
         }
 
-		public Type DataType
-		{
-			get { return dataType; }
-			private set
-            {
-                if (value.BaseType == dataType)
-                {
-					dataType = value;
-                }
-                else
-                {
-					throw new Exception("Не верно задан тип данных в таблице. Тип данных, который вы хотите задать в табличе должен быть унаследован от класса Cell");
-				}
-            }
-		}
-
-		public List<Cell> Cells
+		public List<Te> Cells
 		{
 			get { return cells; }
 		}
 
-		public Table(Type type)
-		{
-			DataType = type;
-		}
-
-		public Table(int id, Type type)
+		public Table(int id)
 		{
 			this.id = id;
-			DataType = type;
 		}
 
-		public Table(int id, String name, Type type)
+		public Table(int id, String name)
 		{
 			this.id = id;
 			this.name = name;
-			DataType = type;
 		}
 
 		public bool addElement()
         {
-			Cell cell = (Cell)Activator.CreateInstance(this.dataType, ++counter);
+			//Cell cell = (Cell)Activator.CreateInstance(this.dataType, ++counter);
+			Te cell = (Te)Activator.CreateInstance(Te.GetType(), ++counter);
 			cells.Add(cell);
 
 			return true;
