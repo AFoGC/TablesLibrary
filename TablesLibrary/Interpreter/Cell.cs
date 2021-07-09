@@ -264,11 +264,18 @@ namespace TablesLibrary.Interpreter
 
 		public static DateTime readDate(String data)
         {
-			return new DateTime (
+            try
+            {
+				return new DateTime(
 				Convert.ToInt32("" + data[6] + data[7] + data[8] + data[9]),
 				Convert.ToInt32("" + data[3] + data[4]),
 				Convert.ToInt32("" + data[0] + data[1])
-			);
+				);
+			}
+            catch
+            {
+				return new DateTime();
+            }
         }
 	}
 }
