@@ -21,14 +21,14 @@ namespace TablesLibrary.Interpreter
 		}
 
 		public String Name
-        {
-            get { return name; }
-        }
+		{
+			get { return name; }
+		}
 
 		public int LastId
-        {
-            get { return counter; }
-        }
+		{
+			get { return counter; }
+		}
 
 		public List<Te> Cells
 		{
@@ -47,47 +47,37 @@ namespace TablesLibrary.Interpreter
 		}
 
 		public bool addElement()
-        {
+		{
 			//Cell cell = (Cell)Activator.CreateInstance(this.dataType, ++counter);
-			Te cell = (Te)Activator.CreateInstance(Te.GetType(), ++counter);
+			Te cell = (Te)Activator.CreateInstance(typeof(Te), ++counter);
 			cells.Add(cell);
 
 			return true;
 		}
 
-		public bool addElement(Cell import)
-        {
-            if (import.GetType() == this.DataType)
-            {
-				Cell cell = (Cell)Activator.CreateInstance(this.dataType, ++counter);
-                if (cell.UpdateThis(import))
-                {
-					cells.Add(cell);
-					return true;
-				}
-                else
-                {
-					return false;
-                }
+		public bool addElement(Te import)
+		{
+			Te cell = (Te)Activator.CreateInstance(typeof(Te), ++counter);
+			if (cell.UpdateThis(import))
+			{
+				cells.Add(cell);
+				return true;
 			}
-            else
-            {
+			else
+			{
 				return false;
 			}
-        }
+		}
 
 
-		public bool UpdateElement(Cell cell)
+		public bool UpdateElement(Te cell)
 		{
-			if (cell.GetType() == this.DataType)
+			for (int i = 0; i < cells.Count; i++)
 			{
-				for (int i = 0; i < cells.Count; i++)
+				if (cells[i].ID == cell.ID)
 				{
-					if (cells[i].ID == cell.ID)
-					{
-						cells[i] = cell;
-						return true;
-					}
+					cells[i] = cell;
+					return true;
 				}
 			}
 			return false;
@@ -111,7 +101,7 @@ namespace TablesLibrary.Interpreter
 		public void loadTable(StreamReader streamReader, Comand comand)
 		{
 			bool endReading = false;
-			String dataName = dataType.Name;
+			String dataName = typeof(Te).Name;
 
 			while (endReading == false)
 			{
@@ -120,7 +110,8 @@ namespace TablesLibrary.Interpreter
 				{
 					if (comand.Paramert == dataName)
 					{
-						Cell cell = (Cell)Activator.CreateInstance(this.dataType);
+						//Te cell = (Te)Activator.CreateInstance(typeof(Te));
+						Te cell = new Te();
 						cell.loadCell(streamReader, comand);
 						cells.Add(cell);
 					}
@@ -144,8 +135,8 @@ namespace TablesLibrary.Interpreter
 					}
 				}
 			}
-            if (cells.Count != 0)
-            {
+			if (cells.Count != 0)
+			{
 				counter = cells[cells.Count - 1].ID;
 			}
 		}
@@ -163,12 +154,12 @@ namespace TablesLibrary.Interpreter
 		}
 
 		public Cell GetLastElement
-        {
-            get
-            {
+		{
+			get
+			{
 				return cells[cells.Count - 1];
-            }
-        }
+			}
+		}
 
 		private String tableDeclaration(int countOfTabulations)
 		{
@@ -177,7 +168,7 @@ namespace TablesLibrary.Interpreter
 			{
 				export = export + "\t";
 			}
-			return export + "<Table: " + dataType.Name + ">\n";
+			return export + "<Table: " + typeof(Te).Name + ">\n";
 		}
 	}
 }
