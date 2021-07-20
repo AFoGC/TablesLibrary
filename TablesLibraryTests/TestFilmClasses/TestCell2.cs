@@ -30,7 +30,7 @@ namespace TablesLibraryTests.TestFilmClasses
 
 		protected override void saveBody(StreamWriter streamWriter)
 		{
-			base.saveBody(streamWriter);
+			streamWriter.Write(formatParam(nameof(id), id, 2));
 			streamWriter.Write(formatParam(nameof(count), count, 2));
 			streamWriter.Write(formatParam(nameof(name), name, 2));
 		}
@@ -53,5 +53,10 @@ namespace TablesLibraryTests.TestFilmClasses
 					break;
 			}
 		}
-    }
+
+		protected override void updateThisBody(Cell cell)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

@@ -42,26 +42,17 @@ namespace TablesLibraryTests.TestFilmClasses
 		public TestCell1() : base() { }
 		public TestCell1(int id) : base(id) { }
 
-        public override bool UpdateThis(Cell cell)
-        {
-            if (this.GetType() == cell.GetType())
-            {
-				TestCell1 loacalCell = (TestCell1)cell;
+		protected override void updateThisBody(Cell cell)
+		{
+			TestCell1 loacalCell = (TestCell1)cell;
 
-				this.name = loacalCell.name;
-				this.watched = loacalCell.watched;
-				this.mark = loacalCell.mark;
-				this.mark = loacalCell.mark;
+			this.name = loacalCell.name;
+			this.watched = loacalCell.watched;
+			this.mark = loacalCell.mark;
+			this.mark = loacalCell.mark;
+		}
 
-				return true;
-            }
-            else
-            {
-				return false;
-			}
-        }
-
-        protected override void saveBody(StreamWriter streamWriter)
+		protected override void saveBody(StreamWriter streamWriter)
 		{
 			streamWriter.Write(formatParam(nameof(id), id, 2));
 			streamWriter.Write(formatParam(nameof(name), name, 2));
