@@ -7,32 +7,20 @@ using System.Threading.Tasks;
 
 namespace TablesLibrary.Interpreter
 {
-	public class Table<Te> where Te : Cell, new()
+	public class Table<Te> : BaseTable where Te : Cell, new()
 	{
-		protected int id = 0;
-		protected String name = "";
 		protected List<Te> cells = new List<Te>();
 
 		private int counter = 0;
-
-		public int ID
-		{
-			get { return id; }
-		}
-
-		public String Name
-		{
-			get { return name; }
-		}
 
 		public int LastId
 		{
 			get { return counter; }
 		}
 
-		public List<Te> Cells
+		public Te[] Cells
 		{
-			get { return cells; }
+			get { return cells.ToArray(); }
 		}
 
 		public Table(int id)
@@ -46,16 +34,15 @@ namespace TablesLibrary.Interpreter
 			this.name = name;
 		}
 
-		public bool addElement()
+		public bool AddElement()
 		{
-			//Cell cell = (Cell)Activator.CreateInstance(this.dataType, ++counter);
 			Te cell = (Te)Activator.CreateInstance(typeof(Te), ++counter);
 			cells.Add(cell);
 
 			return true;
 		}
 
-		public bool addElement(Te import)
+		public bool AddElement(Te import)
 		{
 			Te cell = (Te)Activator.CreateInstance(typeof(Te), ++counter);
 			if (cell.UpdateThis(import))
@@ -83,7 +70,7 @@ namespace TablesLibrary.Interpreter
 			return false;
 		}
 
-		public void saveTable(StreamWriter streamWriter)
+		public override void SaveTable(StreamWriter streamWriter)
 		{
 			streamWriter.Write(this.tableDeclaration(0));
 			streamWriter.Write(Cell.formatParam(nameof(id), id, 1));
@@ -98,7 +85,7 @@ namespace TablesLibrary.Interpreter
 			streamWriter.WriteLine();
 		}
 
-		public void loadTable(StreamReader streamReader, Comand comand)
+		public override void LoadTable(StreamReader streamReader, Comand comand)
 		{
 			bool endReading = false;
 			String dataName = typeof(Te).Name;
@@ -141,9 +128,9 @@ namespace TablesLibrary.Interpreter
 			}
 		}
 
-		public Cell GetElement(int index)
+		public Te GetElement(int index)
 		{
-			foreach (Cell item in cells)
+			foreach (Te item in cells)
 			{
 				if (item.ID == index)
 				{
@@ -153,7 +140,7 @@ namespace TablesLibrary.Interpreter
 			return null;
 		}
 
-		public Cell GetLastElement
+		public Te GetLastElement
 		{
 			get
 			{
@@ -161,7 +148,9 @@ namespace TablesLibrary.Interpreter
 			}
 		}
 
-		private String tableDeclaration(int countOfTabulations)
+        public override Type DataType => typeof(Te);
+
+        private String tableDeclaration(int countOfTabulations)
 		{
 			String export = "";
 			for (int i = 0; i < countOfTabulations; i++)

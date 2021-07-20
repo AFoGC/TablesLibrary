@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interpreter\BaseTable.cs" />
     <Compile Include="Interpreter\Cell.cs" />
     <Compile Include="Interpreter\Comand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

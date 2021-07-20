@@ -9,11 +9,17 @@ namespace TablesLibrary.Interpreter
 {
 	public class TableCollection
 	{
-		private List<Table> tables = new List<Table>();
+		private List<BaseTable> tables = new List<BaseTable>();
 		private int counter = 0;
-		public String tableFilePath = null;
+		private String tableFilePath = null;
 
-		public List<Table> Tables
+		public String TableFilePath
+        {
+            get { return tableFilePath; }
+            set { tableFilePath = value; }
+        }
+
+		public List<BaseTable> Tables
 		{
 			get { return tables; }
 		}
@@ -28,7 +34,7 @@ namespace TablesLibrary.Interpreter
 			this.tableFilePath = tableFilePath;
         }
 
-		public bool loadTables()
+		public bool LoadTables()
 		{
 			using (StreamReader sr = new StreamReader(tableFilePath, System.Text.Encoding.Default))
 			{
@@ -44,11 +50,11 @@ namespace TablesLibrary.Interpreter
 							switch (comand.Paramert)
 							{
 								case "Table":
-									foreach (Table table in tables)
+									foreach (BaseTable table in tables)
 									{
 										if (table.DataType.Name == comand.Argument)
 										{
-											table.loadTable(sr, comand);
+											table.LoadTable(sr, comand);
 										}
 									}
 									break;
@@ -76,15 +82,15 @@ namespace TablesLibrary.Interpreter
 			}
 		}
 
-		public void saveTables()
+		public void SaveTables()
 		{
 			using (StreamWriter sw = new StreamWriter(tableFilePath, false, System.Text.Encoding.Default))
 			{
 				sw.WriteLine("<DocStart>");
 
-				foreach (Table table in tables)
+				foreach (BaseTable table in tables)
 				{
-					table.saveTable(sw);
+					table.SaveTable(sw);
 				}
 
 				sw.WriteLine("<DocEnd>");
@@ -93,24 +99,13 @@ namespace TablesLibrary.Interpreter
 
 		public void AddTable(Type type)
 		{
-			tables.Add(new Table(++counter, type));
+			Type genericTableType = typeof(Table<>).MakeGenericType(type);
+			tables.Add((BaseTable)Activator.CreateInstance(genericTableType, ++counter));
 		}
 
-		public Table GetTable(int id)
-		{
-			foreach (Table table in tables)
-			{
-				if (table.ID == id)
-				{
-					return table;
-				}
-			}
-			return null;
-		}
-
-		public Table GetTable(Type type)
+		public BaseTable GetTable(Type type)
         {
-            foreach (Table table in tables)
+            foreach (BaseTable table in tables)
             {
                 if (table.DataType == type)
                 {
@@ -120,19 +115,7 @@ namespace TablesLibrary.Interpreter
 			return null;
         }
 
-		public Table GetTable(String name)
-		{
-			foreach (Table table in tables)
-			{
-				if (table.name == name)
-				{
-					return table;
-				}
-			}
-			return null;
-		}
-
-		public bool UpdateTable(Table import)
+		public bool UpdateTable(BaseTable import)
 		{
 			for (int i = 0; i < tables.Count; i++)
 			{
