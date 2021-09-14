@@ -210,5 +210,13 @@ namespace TablesLibrary.Interpreter
 			}
 			return export + "<Table: " + dataType.Name + ">\n";
 		}
+
+		public void RemoveAll()
+        {
+            for (int i = 0; i < cells.Count; i++)
+            {
+				cells.Remove(cells[0]);
+            }
+        }
 	}
 }
