@@ -76,6 +76,17 @@ namespace TablesLibrary.Interpreter
 			}
 		}
 
+		public String GetVoidTableCollection()
+        {
+			String str = "";
+            foreach (Table table in tables)
+            {
+				str += table.GetVoidTableInfo();
+            }
+
+			return str;
+        }
+
 		public void saveTables()
 		{
 			using (StreamWriter sw = new StreamWriter(tableFilePath, false, System.Text.Encoding.Default))

@@ -126,6 +126,19 @@ namespace TablesLibrary.Interpreter
 			streamWriter.WriteLine();
 		}
 
+		public string GetVoidTableInfo()
+        {
+			String str = "";
+
+			str += this.tableDeclaration(0);
+			str += Cell.formatParam(nameof(id), id, 1);
+			str += Cell.formatParam(nameof(name), DataType.Name, 1);
+
+
+			str += "<Table>\n\n";
+			return str;
+		}
+
 		public void loadTable(StreamReader streamReader, Comand comand)
 		{
 			bool endReading = false;
