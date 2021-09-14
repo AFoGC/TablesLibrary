@@ -13,6 +13,24 @@ namespace TablesLibrary.Interpreter
 		private int counter = 0;
 		private String tableFilePath = null;
 
+
+		public BaseTable this[Type type]
+        {
+            get
+            {
+                foreach (BaseTable baseTable in tables)
+                {
+                    if (baseTable.DataType == type)
+                    {
+						return baseTable;
+                    }
+                }
+
+				return null;
+            }
+        }
+
+
 		public String TableFilePath
         {
             get { return tableFilePath; }
