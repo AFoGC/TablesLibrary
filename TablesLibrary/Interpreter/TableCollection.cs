@@ -30,6 +30,11 @@ namespace TablesLibrary.Interpreter
 
 		public bool loadTables()
 		{
+            foreach (Table tab in tables)
+            {
+				tab.RemoveAll();
+            }
+
 			using (StreamReader sr = new StreamReader(tableFilePath, System.Text.Encoding.Default))
 			{
 				if (sr.ReadLine() == "<DocStart>")
@@ -106,6 +111,19 @@ namespace TablesLibrary.Interpreter
 		{
 			tables.Add(new Table(++counter, type));
 		}
+
+		public void AddTable(Table import)
+        {
+			Table table = new Table(++counter, import.DataType);
+			table.name = import.name;
+
+            foreach (Cell cell in import.Cells)
+            {
+				table.addWithoutReindexation(cell);
+            }
+
+			tables.Add(table);
+        }
 
 		public Table GetTable(int id)
 		{

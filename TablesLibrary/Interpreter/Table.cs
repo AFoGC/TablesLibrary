@@ -94,6 +94,18 @@ namespace TablesLibrary.Interpreter
 			}
         }
 
+		public bool addWithoutReindexation(Cell import)
+        {
+            if (import.GetType() == this.DataType)
+            {
+				cells.Add(import);
+				return true;
+            }
+            else
+            {
+				return false;
+            }
+        }
 
 		public bool UpdateElement(Cell cell)
 		{
@@ -213,7 +225,7 @@ namespace TablesLibrary.Interpreter
 
 		public void RemoveAll()
         {
-            for (int i = 0; i < cells.Count; i++)
+            while (cells.Count > 0)
             {
 				cells.Remove(cells[0]);
             }
