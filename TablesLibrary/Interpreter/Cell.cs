@@ -78,68 +78,9 @@ namespace TablesLibrary.Interpreter
 
 		//--------------------------------------formatParam static methods------------------------------------------------
 
-		public static String formatParam(String variableName, int item, int countOfTabulations)
-		{
-			String export = formatToString(item);
-			
-            if (export == "")
-            {
-				return export;
-            }
-            else
-            {
-				export = formatComand(variableName, export);
-
-                for (int i = 0; i < countOfTabulations; i++)
-                {
-					export = "\t" + export;
-                }
-				return export;
-            }
-		}
-
-		public static String formatParam(String variableName, sbyte item, int countOfTabulations)
-		{
-			String export = formatToString(item);
-            if (export == "")
-            {
-				return export;
-            }
-            else
-            {
-				export = formatComand(variableName, export);
-
-                for (int i = 0; i < countOfTabulations; i++)
-                {
-					export = "\t" + export;
-                }
-
-				return export;
-			}
-		}
-
-		public static String formatParam(String variableName, String item, int countOfTabulations)
-		{
-			String export = formatToString(item);
-			if (export == "")
-			{
-				return "";
-			}
-            else
-            {
-				export = formatComand(variableName, export);
-				for (int i = 0; i < countOfTabulations; i++)
-				{
-					export = "\t" + export;
-				}
-
-				return export;
-			}
-		}
-
-		public static String formatParam(String variableName, bool item, int countOfTabulations)
-		{
-			String export = formatToString(item);
+		public static String FormatParam<T>(String variableName, T item, T defaultValue, int countOfTabulations)
+        {
+			String export = FormatToString(item, defaultValue);
 			export = formatComand(variableName, export);
 
 			for (int i = 0; i < countOfTabulations; i++)
@@ -148,26 +89,6 @@ namespace TablesLibrary.Interpreter
 			}
 
 			return export;
-		}
-		
-		public static String formatParam(String variableName, DateTime item, int countOfTabulations)
-		{
-
-			String export = formatToString(item);
-            if (export == "")
-            {
-				return "";
-            }
-            else
-            {
-				export = formatComand(variableName, export);
-				for (int i = 0; i < countOfTabulations; i++)
-				{
-					export = "\t" + export;
-				}
-
-				return export;
-			}
 		}
 
 		private static String formatComand(String parametr, String argument)
@@ -184,53 +105,25 @@ namespace TablesLibrary.Interpreter
 			}
 			return export + "<" + type.Name + ">\n";
 		}
-
-		//--------------------------------formatToString static methods-------------------------------------
-
-		public static String formatToString(int item)
-		{
-			if (item == 0)
-			{
-				return "";
-			}
-			else
-			{
-				return item.ToString();
-			}
-		}
-
-		public static String formatToString(sbyte item)
-		{
-			if (item == -1)
-			{
-				return "";
-			}
-			else
-			{
-				return item.ToString();
-			}
-		}
-
-		public static String formatToString(String item)
+		
+		private static String FormatToString<T>(T item, T defaultValue)
         {
-			return item;
-        }
-
-		public static String formatToString(bool item)
-        {
-			return item.ToString();
-        }
-
-		public static String formatToString(DateTime date)
-        {
-            if (date.Year == 1)
+            if (EqualityComparer<T>.Default.Equals(item, defaultValue))
             {
 				return "";
-            }
+			}
             else
             {
-				return formatDate(date);
-			}
+                if (item.GetType() == typeof(DateTime))
+                {
+					DateTime exp = (DateTime)(object)item;
+					return formatDate(exp);
+				}
+                else
+                {
+					return item.ToString();
+				}
+            }
         }
 
 		private static String formatDate(DateTime date)

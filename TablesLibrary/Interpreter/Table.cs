@@ -91,8 +91,8 @@ namespace TablesLibrary.Interpreter
 		public override void SaveTable(StreamWriter streamWriter)
 		{
 			streamWriter.Write(this.tableDeclaration(0));
-			streamWriter.Write(Cell.formatParam(nameof(id), id, 1));
-			streamWriter.Write(Cell.formatParam(nameof(name), name, 1));
+			streamWriter.Write(Cell.FormatParam(nameof(id), id, 0, 1));
+			streamWriter.Write(Cell.FormatParam(nameof(name), name, "", 1));
 
 			foreach (Cell cell in this.cells)
 			{
