@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace TablesLibrary.Interpreter
 {
-	public class Table<Te> : BaseTable where Te : Cell, new()
-	{
+    public class Table<Te> : BaseTable, IEnumerable where Te : Cell, new()
+    {
 		protected List<Te> cells = new List<Te>();
 
 		private int counter = 0;
@@ -18,9 +19,11 @@ namespace TablesLibrary.Interpreter
 			get { return counter; }
 		}
 
-		public Te[] Cells
+		public override Type DataType => typeof(Te);
+
+		public Te[] ToArray()
 		{
-			get { return cells.ToArray(); }
+			return cells.ToArray();
 		}
 
 		public Table(int id)
@@ -33,6 +36,14 @@ namespace TablesLibrary.Interpreter
 			this.id = id;
 			this.name = name;
 		}
+
+		public Te this[int index]
+        {
+            get
+            {
+				return cells[index];
+            }
+        }
 
 		public bool AddElement()
 		{
@@ -55,6 +66,13 @@ namespace TablesLibrary.Interpreter
 				return false;
 			}
 		}
+
+		public bool AddWithoutReindexation(Te import)
+		{
+			cells.Add(import);
+			return true;
+		}
+
 
 
 		public bool UpdateElement(Te cell)
@@ -97,7 +115,6 @@ namespace TablesLibrary.Interpreter
 				{
 					if (comand.Paramert == dataName)
 					{
-						//Te cell = (Te)Activator.CreateInstance(typeof(Te));
 						Te cell = new Te();
 						cell.loadCell(streamReader, comand);
 						cells.Add(cell);
@@ -128,7 +145,7 @@ namespace TablesLibrary.Interpreter
 			}
 		}
 
-		public Te GetElement(int index)
+		public Te GetElementByIndex(int index)
 		{
 			foreach (Te item in cells)
 			{
@@ -148,9 +165,7 @@ namespace TablesLibrary.Interpreter
 			}
 		}
 
-        public override Type DataType => typeof(Te);
-
-        private String tableDeclaration(int countOfTabulations)
+		private String tableDeclaration(int countOfTabulations)
 		{
 			String export = "";
 			for (int i = 0; i < countOfTabulations; i++)
@@ -159,5 +174,53 @@ namespace TablesLibrary.Interpreter
 			}
 			return export + "<Table: " + typeof(Te).Name + ">\n";
 		}
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+			return (IEnumerator)GetEnumerator();
+        }
+
+		private TableEnum<Te> GetEnumerator()
+		{
+			return new TableEnum<Te>(cells);
+		}
 	}
+
+    internal class TableEnum<T> : IEnumerator where T : Cell, new()
+	{
+		private List<T> list;
+		private int position = -1;
+
+        public TableEnum(List<T> table)
+        {
+			this.list = table;
+        }
+
+		object IEnumerator.Current
+		{
+			get
+			{
+				return Current;
+			}
+		}
+
+		public T Current
+		{
+			get
+			{
+				return list[position];
+			}
+		}
+
+		public bool MoveNext()
+        {
+			position++;
+			return (position < list.Count);
+        }
+
+        public void Reset()
+        {
+			position = -1;
+        }
+    }
 }
