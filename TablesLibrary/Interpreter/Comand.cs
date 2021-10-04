@@ -17,7 +17,7 @@ namespace TablesLibrary.Interpreter
 			get { return parametr; }
 		}
 
-		public String Argument
+		public String Value
 		{
 			get { return argument; }
 		}

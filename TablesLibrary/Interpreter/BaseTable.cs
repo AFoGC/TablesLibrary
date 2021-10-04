@@ -21,6 +21,7 @@ namespace TablesLibrary.Interpreter
 		public String Name
 		{
 			get { return name; }
+			set { name = value; }
 		}
 
 		public abstract void SaveTable(StreamWriter streamWriter);

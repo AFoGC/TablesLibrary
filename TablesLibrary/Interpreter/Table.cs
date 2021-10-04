@@ -12,6 +12,12 @@ namespace TablesLibrary.Interpreter
     {
 		protected List<Te> cells = new List<Te>();
 
+		private Te defaultCell = new Te();
+		public Te DefaultCell
+        {
+            get { return defaultCell; }
+        }
+
 		private int counter = 0;
 
 		public int LastId
@@ -94,7 +100,7 @@ namespace TablesLibrary.Interpreter
 			streamWriter.Write(Cell.FormatParam(nameof(id), id, 0, 1));
 			streamWriter.Write(Cell.FormatParam(nameof(name), name, "", 1));
 
-			foreach (Cell cell in this.cells)
+			foreach (Te cell in this.cells)
 			{
 				cell.saveCell(streamWriter);
 			}
@@ -124,10 +130,10 @@ namespace TablesLibrary.Interpreter
 						switch (comand.Paramert)
 						{
 							case "id":
-								this.id = Convert.ToInt32(comand.Argument);
+								this.id = Convert.ToInt32(comand.Value);
 								break;
 							case "name":
-								this.name = comand.Argument;
+								this.name = comand.Value;
 								break;
 							case "Table":
 								endReading = true;

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using TablesLibrary.Interpreter.Attributes;
 
 namespace TablesLibrary.Interpreter
 {
@@ -33,24 +35,50 @@ namespace TablesLibrary.Interpreter
 		protected abstract void loadBody(Comand comand);
 		protected abstract void saveBody(StreamWriter streamWriter);
 
+		protected void saveBody(StreamWriter streamWriter, Cell defaultCell)
+		{
+			Type thisType = this.GetType();
+			Type defType = defaultCell.GetType();
+
+			FieldInfo[] thisFields = thisType.GetFields();
+			FieldInfo[] defFields = defType.GetFields();
+
+			String savename = "";
+			for (int i = 0; i < thisFields.Length; i++)
+			{
+				if (thisFields[i].GetCustomAttribute<FieldAttribute>() != null)
+				{
+					savename = thisFields[i].GetCustomAttribute<FieldAttribute>().FieldName;
+					streamWriter.Write(FormatParam(savename, thisFields[i].GetValue(this), defFields[i].GetValue(defaultCell), 2));
+				}
+			}
+		}
+
 		public bool UpdateThis(Cell cell)
-        {
-            if (this.GetType() == cell.GetType())
-            {
+		{
+			if (this.GetType() == cell.GetType())
+			{
 				updateThisBody(cell);
 
 				return true;
-            }
-            else
-            {
+			}
+			else
+			{
 				return false;
-            }
-        }
+			}
+		}
 
 		public void saveCell(StreamWriter streamWriter)
 		{
 			streamWriter.Write(formatMark(this.GetType(), 1));
 			this.saveBody(streamWriter);
+			streamWriter.Write(formatMark(this.GetType(), 1));
+		}
+
+		public void saveCell(StreamWriter streamWriter, Cell defaultCell)
+		{
+			streamWriter.Write(formatMark(this.GetType(), 1));
+			this.saveBody(streamWriter, defaultCell);
 			streamWriter.Write(formatMark(this.GetType(), 1));
 		}
 
@@ -79,7 +107,7 @@ namespace TablesLibrary.Interpreter
 		//--------------------------------------formatParam static methods------------------------------------------------
 
 		public static String FormatParam<T>(String variableName, T item, T defaultValue, int countOfTabulations)
-        {
+		{
 			String export = FormatToString(item, defaultValue);
 			export = formatComand(variableName, export);
 
@@ -92,7 +120,7 @@ namespace TablesLibrary.Interpreter
 		}
 
 		private static String formatComand(String parametr, String argument)
-        {
+		{
 			return "<" + parametr + ": " + argument + ">\n";
 		}
 		
@@ -107,24 +135,24 @@ namespace TablesLibrary.Interpreter
 		}
 		
 		private static String FormatToString<T>(T item, T defaultValue)
-        {
-            if (EqualityComparer<T>.Default.Equals(item, defaultValue))
-            {
+		{
+			if (EqualityComparer<T>.Default.Equals(item, defaultValue))
+			{
 				return "";
 			}
-            else
-            {
-                if (item.GetType() == typeof(DateTime))
-                {
+			else
+			{
+				if (item.GetType() == typeof(DateTime))
+				{
 					DateTime exp = (DateTime)(object)item;
 					return formatDate(exp);
 				}
-                else
-                {
+				else
+				{
 					return item.ToString();
 				}
-            }
-        }
+			}
+		}
 
 		private static String formatDate(DateTime date)
 		{
@@ -156,19 +184,19 @@ namespace TablesLibrary.Interpreter
 		//---------------------------get data static methods------------------------------------------
 
 		public static DateTime readDate(String data)
-        {
-            try
-            {
+		{
+			try
+			{
 				return new DateTime(
 				Convert.ToInt32("" + data[6] + data[7] + data[8] + data[9]),
 				Convert.ToInt32("" + data[3] + data[4]),
 				Convert.ToInt32("" + data[0] + data[1])
 				);
 			}
-            catch
-            {
+			catch
+			{
 				return new DateTime();
-            }
-        }
+			}
+		}
 	}
 }

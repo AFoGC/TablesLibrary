@@ -66,19 +66,19 @@ namespace TablesLibraryTests.TestFilmClasses
 			switch (comand.Paramert)
 			{
 				case "id":
-					this.id = Convert.ToInt32(comand.Argument);
+					this.id = Convert.ToInt32(comand.Value);
 					break;
 				case "name":
-					this.name = comand.Argument;
+					this.name = comand.Value;
 					break;
 				case "watched":
-					this.watched = Convert.ToBoolean(comand.Argument);
+					this.watched = Convert.ToBoolean(comand.Value);
 					break;
 				case "mark":
-					this.mark = Convert.ToSByte(comand.Argument);
+					this.mark = Convert.ToSByte(comand.Value);
 					break;
 				case "date":
-					this.date = readDate(comand.Argument);
+					this.date = readDate(comand.Value);
 					break;
 
 				default:

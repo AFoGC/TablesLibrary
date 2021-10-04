@@ -40,13 +40,13 @@ namespace TablesLibraryTests.TestFilmClasses
 			switch (comand.Paramert)
 			{
 				case "id":
-					this.id = Convert.ToInt32(comand.Argument);
+					this.id = Convert.ToInt32(comand.Value);
 					break;
 				case "count":
-					this.count = Convert.ToInt32(comand.Argument);
+					this.count = Convert.ToInt32(comand.Value);
 					break;
 				case "name":
-					this.name = comand.Argument;
+					this.name = comand.Value;
 					break;
 
 				default:
