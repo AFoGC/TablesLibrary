@@ -8,14 +8,14 @@ using TablesLibraryTests.ACommonTest.Cells;
 
 namespace TablesLibraryTests.ACommonTest.Tables
 {
-    public class GenresTable : Table<Genre>
+    public class CategoriesTable : Table<Category>
     {
-        public GenresTable(int id) : base(id)
+        public CategoriesTable(int id) : base(id)
         {
 
         }
 
-        public GenresTable(int id, String name) : base(id, name)
+        public CategoriesTable(int id, String name) : base(id, name)
         {
 
         }

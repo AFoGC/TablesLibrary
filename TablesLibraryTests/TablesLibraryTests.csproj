@@ -56,11 +56,14 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ACommonTest\Cells\Category.cs" />
+    <Compile Include="ACommonTest\Cells\CellDataClasses\Source.cs" />
     <Compile Include="ACommonTest\Cells\Film.cs" />
     <Compile Include="ACommonTest\Cells\Genre.cs" />
     <Compile Include="ACommonTest\Cells\Serie.cs" />
     <Compile Include="ACommonTest\MainInfo.cs" />
     <Compile Include="ACommonTest\MainTest.cs" />
+    <Compile Include="ACommonTest\Tables\CategoriesTable.cs" />
     <Compile Include="ACommonTest\Tables\FilmsTable.cs" />
     <Compile Include="ACommonTest\Tables\GenresTable.cs" />
     <Compile Include="ACommonTest\Tables\SeriesTable.cs" />

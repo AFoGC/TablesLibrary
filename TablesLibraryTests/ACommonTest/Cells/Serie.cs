@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TablesLibrary.Interpreter;
+using TablesLibrary.Interpreter.Attributes;
 
 namespace TablesLibraryTests.ACommonTest.Cells
 {
-    public class Serie : Cell
+	[TableCell("Genre")]
+	public class Serie : Cell
     {
 		private int filmId = 0;
 		private DateTime startWatchDate = new DateTime();
@@ -30,7 +32,6 @@ namespace TablesLibraryTests.ACommonTest.Cells
 
 		protected override void saveBody(StreamWriter streamWriter)
 		{
-			streamWriter.Write(FormatParam(nameof(id), id, 0 ,2));
 			streamWriter.Write(FormatParam(nameof(filmId), filmId, 0, 2));
 			streamWriter.Write(FormatParam(nameof(startWatchDate), startWatchDate, new DateTime(), 2));
 			streamWriter.Write(FormatParam(nameof(countOfWatchedSeries), countOfWatchedSeries, 0, 2));
@@ -41,9 +42,6 @@ namespace TablesLibraryTests.ACommonTest.Cells
 		{
 			switch (comand.Paramert)
 			{
-				case "id":
-					this.id = Convert.ToInt32(comand.Value);
-					break;
 				case "filmId":
 					this.filmId = Convert.ToInt32(comand.Value);
 					break;

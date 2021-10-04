@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TablesLibrary.Interpreter.Attributes;
 
 namespace TablesLibrary.Interpreter
 {
@@ -100,9 +101,21 @@ namespace TablesLibrary.Interpreter
 			streamWriter.Write(Cell.FormatParam(nameof(id), id, 0, 1));
 			streamWriter.Write(Cell.FormatParam(nameof(name), name, "", 1));
 
-			foreach (Te cell in this.cells)
-			{
-				cell.saveCell(streamWriter);
+			TableCellAttribute attribute = (TableCellAttribute)Attribute.GetCustomAttribute(typeof(Te), typeof(TableCellAttribute));
+
+			if (attribute.IsAutoSave)
+            {
+				foreach (Te cell in cells)
+				{
+					cell.saveCell(streamWriter, defaultCell);
+				}
+			}
+            else
+            {
+				foreach (Te cell in cells)
+				{
+					cell.saveCell(streamWriter);
+				}
 			}
 
 			streamWriter.WriteLine("<Table>");
@@ -112,7 +125,10 @@ namespace TablesLibrary.Interpreter
 		public override void LoadTable(StreamReader streamReader, Comand comand)
 		{
 			bool endReading = false;
-			String dataName = typeof(Te).Name;
+			//String dataName = typeof(Te).Name;
+
+			TableCellAttribute attribute = (TableCellAttribute)Attribute.GetCustomAttribute(typeof(Te), typeof(TableCellAttribute));
+			String dataName = attribute.DataSaveName;
 
 			while (endReading == false)
 			{
@@ -178,7 +194,9 @@ namespace TablesLibrary.Interpreter
 			{
 				export = export + "\t";
 			}
-			return export + "<Table: " + typeof(Te).Name + ">\n";
+
+			TableCellAttribute attribute = (TableCellAttribute)Attribute.GetCustomAttribute(typeof(Te), typeof(TableCellAttribute));
+			return export + "<Table: " + attribute.DataSaveName + ">\n";
 		}
 
         IEnumerator IEnumerable.GetEnumerator()

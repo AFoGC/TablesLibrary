@@ -13,7 +13,8 @@ namespace TablesLibrary.Interpreter
 	{
 		//
 		//
-		protected int id = 0;
+		[Field("id")]
+		private int id = 0;
 
 		public int ID
 		{
@@ -32,8 +33,8 @@ namespace TablesLibrary.Interpreter
 
 
 		protected abstract void updateThisBody(Cell cell);
-		protected abstract void loadBody(Comand comand);
 		protected abstract void saveBody(StreamWriter streamWriter);
+		protected abstract void loadBody(Comand comand);
 
 		protected void saveBody(StreamWriter streamWriter, Cell defaultCell)
 		{
@@ -71,6 +72,7 @@ namespace TablesLibrary.Interpreter
 		public void saveCell(StreamWriter streamWriter)
 		{
 			streamWriter.Write(formatMark(this.GetType(), 1));
+			streamWriter.Write(FormatParam("id", id, 0, 2));
 			this.saveBody(streamWriter);
 			streamWriter.Write(formatMark(this.GetType(), 1));
 		}
@@ -93,7 +95,14 @@ namespace TablesLibrary.Interpreter
 				{
 					if (this.GetType().Name != comand.Paramert)
 					{
-						loadBody(comand);
+                        if (comand.Paramert != "id")
+                        {
+							loadBody(comand);
+						}
+                        else
+						{
+							this.id = Convert.ToInt32(comand.Value);
+						}
 					}
 					else
 					{

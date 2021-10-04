@@ -5,12 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TablesLibrary.Interpreter;
+using TablesLibrary.Interpreter.Attributes;
 
 namespace TablesLibraryTests.ACommonTest.Cells
 {
-	class Genre : Cell
+	[TableCell("Genre")]
+	public class Genre : Cell
 	{
+		[Field("name")]
 		private String name = "";
+
+		[Field("isSerialGenre")]
 		private bool isSerialGenre = false;
 
 		public Genre() : base() { }
@@ -20,9 +25,6 @@ namespace TablesLibraryTests.ACommonTest.Cells
 		{
 			switch (comand.Paramert)
 			{
-				case "id":
-					this.id = Convert.ToInt32(comand.Value);
-					break;
 				case "name":
 					this.name = comand.Value;
 					break;
@@ -37,7 +39,6 @@ namespace TablesLibraryTests.ACommonTest.Cells
 
 		protected override void saveBody(StreamWriter streamWriter)
 		{
-			streamWriter.Write(FormatParam(nameof(id), id, 0, 2));
 			streamWriter.Write(FormatParam(nameof(name), name, "", 2));
 			streamWriter.Write(FormatParam(nameof(isSerialGenre), isSerialGenre, false, 2));
 		}
