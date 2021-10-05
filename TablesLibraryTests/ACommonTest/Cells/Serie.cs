@@ -12,9 +12,13 @@ namespace TablesLibraryTests.ACommonTest.Cells
 	[TableCell("Serie")]
 	public class Serie : Cell
     {
+		[Field("filmId")]
 		private int filmId = 0;
+		[Field("startWatchDate")]
 		private DateTime startWatchDate = new DateTime();
+		[Field("countOfWatchedSeries")]
 		private int countOfWatchedSeries = 0;
+		[Field("totalSeries")]
 		private int totalSeries = 0;
 
 		public Serie() : base() { }
