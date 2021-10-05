@@ -9,7 +9,7 @@ using TablesLibrary.Interpreter.Attributes;
 
 namespace TablesLibraryTests.ACommonTest.Cells
 {
-	[TableCell("Genre")]
+	[TableCell("Serie")]
 	public class Serie : Cell
     {
 		private int filmId = 0;

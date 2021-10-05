@@ -93,6 +93,8 @@ namespace TablesLibrary.Interpreter
 				comand.getComand(streamReader.ReadLine());
 				if (comand.IsComand)
 				{
+
+					//Переделать условие this.GetType().Name
 					if (this.GetType().Name != comand.Paramert)
 					{
                         if (comand.Paramert != "id")
@@ -117,13 +119,21 @@ namespace TablesLibrary.Interpreter
 
 		public static String FormatParam<T>(String variableName, T item, T defaultValue, int countOfTabulations)
 		{
-			String export = FormatToString(item, defaultValue);
-			export = formatComand(variableName, export);
+			String export;
+            if (!EqualityComparer<T>.Default.Equals(item, defaultValue))
+            {
+				export = FormatToString(item, defaultValue);
+				export = formatComand(variableName, export);
 
-			for (int i = 0; i < countOfTabulations; i++)
-			{
-				export = "\t" + export;
+				for (int i = 0; i < countOfTabulations; i++)
+				{
+					export = "\t" + export;
+				}
 			}
+            else
+            {
+				export = "";
+            }
 
 			return export;
 		}

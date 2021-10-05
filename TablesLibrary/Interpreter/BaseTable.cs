@@ -16,6 +16,17 @@ namespace TablesLibrary.Interpreter
 		public int ID
 		{
 			get { return id; }
+            set
+            {
+                if (id == 0)
+                {
+                    id = value;
+                }
+                else
+                {
+                    throw new Exception("Cant change id if it != 0");
+                }
+            }
 		}
 
 		public String Name

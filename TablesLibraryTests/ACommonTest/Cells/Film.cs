@@ -76,7 +76,9 @@ namespace TablesLibraryTests.ACommonTest.Cells
 					this.name = comand.Value;
 					break;
 				case "genre":
-					this.genre = (Genre)MainInfo.TableCollection.GetTable<Genre>().GetElementByIndex(Convert.ToInt32(comand.Value));
+					//this.genre = MainInfo.Tables.GenresTable.GetElementByIndex(Convert.ToInt32(comand.Value));
+					//this.genre = MainInfo.TableCollection.GetTable<Genre>().GetElementByIndex(Convert.ToInt32(comand.Value));
+					this.genre = MainInfo.Tables.GenresTable.GetElementByIndex(Convert.ToInt32(comand.Value));
 					break;
 				case "realiseYear":
 					this.realiseYear = Convert.ToInt32(comand.Value);

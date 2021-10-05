@@ -9,12 +9,23 @@ using TablesLibrary.Interpreter;
 namespace TablesLibraryTests.ACommonTest
 {
 	[TestClass()]
-	class MainTest
+	public class MainTest
 	{
 		[TestMethod()]
-		static void Main()
+		public void Main()
 		{
+			//TableCollection collection = 
+			MainInfo.TableCollection.TableFilePath = @"F:\filmsDirectory\Testy.fdbc";
+			MainInfo.TableCollection.LoadTables();
+			MainInfo.TableCollection.TableFilePath = @"F:\filmsDirectory\Save.fdbc";
+			MainInfo.TableCollection.SaveTables();
 
+			Assert.IsTrue(true);
 		}
+
+		static void Fill()
+        {
+
+        }
 	}
 }

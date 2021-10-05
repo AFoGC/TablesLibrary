@@ -33,6 +33,11 @@ namespace TablesLibrary.Interpreter
 			return cells.ToArray();
 		}
 
+		public Table()
+        {
+
+        }
+
 		public Table(int id)
 		{
 			this.id = id;

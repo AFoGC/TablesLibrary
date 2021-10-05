@@ -10,14 +10,8 @@ namespace TablesLibraryTests.ACommonTest.Tables
 {
     public class SeriesTable : Table<Serie>
     {
-        public SeriesTable(int id) : base(id)
-        {
-
-        }
-
-        public SeriesTable(int id, String name) : base(id, name)
-        {
-
-        }
+        public SeriesTable() : base() { }
+        public SeriesTable(int id) : base(id) { }
+        public SeriesTable(int id, String name) : base(id, name) { }
     }
 }

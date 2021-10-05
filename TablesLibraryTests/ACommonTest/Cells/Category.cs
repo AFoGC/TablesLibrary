@@ -34,7 +34,7 @@ namespace TablesLibraryTests.ACommonTest.Cells
 		protected override void saveBody(StreamWriter streamWriter)
 		{
 			streamWriter.Write(FormatParam(nameof(name), name, "", 2));
-			streamWriter.Write(FormatParam(nameof(mark), mark, -1 , 2));
+			streamWriter.Write(FormatParam(nameof(mark), mark, -1, 2));
 			streamWriter.Write(FormatParam(nameof(priority), priority, 0, 2));
 		}
 

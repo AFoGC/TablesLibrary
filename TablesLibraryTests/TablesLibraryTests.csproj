@@ -71,8 +71,6 @@
     <Compile Include="Interpreter\TableCollectionTests.cs" />
     <Compile Include="Interpreter\TableTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestFilmClasses\TestCell1.cs" />
-    <Compile Include="TestFilmClasses\TestCell2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

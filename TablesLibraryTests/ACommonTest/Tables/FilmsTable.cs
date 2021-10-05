@@ -10,14 +10,8 @@ namespace TablesLibraryTests.ACommonTest.Tables
 {
 	public class FilmsTable : Table<Film>
 	{
-        public FilmsTable(int id) : base(id)
-        {
-
-        }
-
-        public FilmsTable(int id, String name) : base(id, name)
-        {
-
-        }
+        public FilmsTable() : base() { }
+        public FilmsTable(int id) : base(id) { }
+        public FilmsTable(int id, String name) : base(id, name) { }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TablesLibrary.Interpreter;
+using TablesLibraryTests.ACommonTest.Cells;
 using TablesLibraryTests.ACommonTest.Tables;
 
 namespace TablesLibraryTests.ACommonTest
@@ -20,10 +21,7 @@ namespace TablesLibraryTests.ACommonTest
 		{
 			tabColl = new TableCollection();
 
-			tabColl.AddTable(Tables.CategoriesTable);
-			tabColl.AddTable(Tables.GenresTable);
-			tabColl.AddTable(Tables.FilmsTable);
-			tabColl.AddTable(Tables.SeriesTable);
+			Tables.Initialize();
 		}
 
 		public static class Tables
@@ -33,18 +31,26 @@ namespace TablesLibraryTests.ACommonTest
 			private static FilmsTable filmsTable;
 			private static SeriesTable seriesTable;
 
+
+			static Tables()
+            {
+				categoriesTable = new CategoriesTable();
+				genresTable = new GenresTable();
+				filmsTable = new FilmsTable();
+				seriesTable = new SeriesTable();
+
+				TableCollection.AddTable(categoriesTable);
+				TableCollection.AddTable(genresTable);
+				TableCollection.AddTable(filmsTable);
+				TableCollection.AddTable(seriesTable);
+			}
+
+			public static void Initialize() { }
+
 			public static CategoriesTable CategoriesTable { get { return categoriesTable; } }
 			public static GenresTable GenresTable { get { return genresTable; } }
 			public static FilmsTable FilmsTable { get { return filmsTable; } }
 			public static SeriesTable SeriesTable { get { return seriesTable; } }
-
-			static Tables()
-			{
-				categoriesTable = new CategoriesTable(1);
-				genresTable = new GenresTable(2);
-				filmsTable = new FilmsTable(3);
-				seriesTable = new SeriesTable(4);
-			}
 		}
 	}
 }

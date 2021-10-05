@@ -10,14 +10,8 @@ namespace TablesLibraryTests.ACommonTest.Tables
 {
     public class GenresTable : Table<Genre>
     {
-        public GenresTable(int id) : base(id)
-        {
-
-        }
-
-        public GenresTable(int id, String name) : base(id, name)
-        {
-
-        }
+        public GenresTable() : base() { }
+        public GenresTable(int id) : base(id) { }
+        public GenresTable(int id, String name) : base(id, name) { }
     }
 }

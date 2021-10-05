@@ -10,14 +10,8 @@ namespace TablesLibraryTests.ACommonTest.Tables
 {
     public class CategoriesTable : Table<Category>
     {
-        public CategoriesTable(int id) : base(id)
-        {
-
-        }
-
-        public CategoriesTable(int id, String name) : base(id, name)
-        {
-
-        }
+        public CategoriesTable() : base() { }
+        public CategoriesTable(int id) : base(id) { }
+        public CategoriesTable(int id, String name) : base(id, name) { }
     }
 }

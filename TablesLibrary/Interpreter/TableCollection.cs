@@ -146,15 +146,8 @@ namespace TablesLibrary.Interpreter
 
 		public void AddTable<T>(Table<T> import) where T : Cell, new()
 		{
-			Table<T> table = new Table<T>(++counter, import.Name);
-			table.Name = import.Name;
-
-			foreach (T cell in import)
-			{
-				table.AddWithoutReindexation(cell);
-			}
-
-			tables.Add(table);
+			import.ID = ++counter;
+			tables.Add(import);
 		}
 
 		public bool UpdateTable(BaseTable import)
