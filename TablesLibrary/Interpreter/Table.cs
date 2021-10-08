@@ -57,6 +57,11 @@ namespace TablesLibrary.Interpreter
             }
         }
 
+		public int Count
+        {
+            get { return cells.Count; }
+        }
+
 		public bool AddElement()
 		{
 			Te cell = (Te)Activator.CreateInstance(typeof(Te), ++counter);
@@ -85,8 +90,6 @@ namespace TablesLibrary.Interpreter
 			return true;
 		}
 
-
-
 		public bool UpdateElement(Te cell)
 		{
 			for (int i = 0; i < cells.Count; i++)
@@ -98,6 +101,60 @@ namespace TablesLibrary.Interpreter
 				}
 			}
 			return false;
+		}
+
+		public bool Remove(Te remove)
+        {
+			return cells.Remove(remove);
+        }
+
+		public void RemoveAll(Boolean restartCounter)
+        {
+			while (cells.Count > 0)
+			{
+				cells.Remove(cells[0]);
+			}
+			if (restartCounter) counter = 0;
+		}
+
+		public void RemoveAll()
+		{
+			while (cells.Count > 0)
+			{
+				cells.Remove(cells[0]);
+			}
+			counter = 0;
+		}
+
+		public void WipeAllInfo()
+		{
+			while (cells.Count > 0)
+			{
+				cells.Remove(cells[0]);
+			}
+			counter = 0;
+			id = 0;
+			name = "";
+		}
+
+		public Te GetElementByIndex(int index)
+		{
+			foreach (Te item in cells)
+			{
+				if (item.ID == index)
+				{
+					return item;
+				}
+			}
+			return null;
+		}
+
+		public Te GetLastElement
+		{
+			get
+			{
+				return cells[cells.Count - 1];
+			}
 		}
 
 		public override void SaveTable(StreamWriter streamWriter)
@@ -129,8 +186,8 @@ namespace TablesLibrary.Interpreter
 
 		public override void LoadTable(StreamReader streamReader, Comand comand)
 		{
+			this.RemoveAll();
 			bool endReading = false;
-			//String dataName = typeof(Te).Name;
 
 			TableCellAttribute attribute = (TableCellAttribute)Attribute.GetCustomAttribute(typeof(Te), typeof(TableCellAttribute));
 			String dataName = attribute.DataSaveName;
@@ -169,26 +226,6 @@ namespace TablesLibrary.Interpreter
 			if (cells.Count != 0)
 			{
 				counter = cells[cells.Count - 1].ID;
-			}
-		}
-
-		public Te GetElementByIndex(int index)
-		{
-			foreach (Te item in cells)
-			{
-				if (item.ID == index)
-				{
-					return item;
-				}
-			}
-			return null;
-		}
-
-		public Te GetLastElement
-		{
-			get
-			{
-				return cells[cells.Count - 1];
 			}
 		}
 

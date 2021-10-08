@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TablesLibrary.Interpreter.Attributes;
 
 namespace TablesLibrary.Interpreter
 {
@@ -83,6 +84,7 @@ namespace TablesLibrary.Interpreter
 				{
 					Comand comand = new Comand();
 					bool endReading = false;
+					TableCellAttribute attribute;
 					while (endReading == false)
 					{
 						comand.getComand(sr.ReadLine());
@@ -93,7 +95,8 @@ namespace TablesLibrary.Interpreter
 								case "Table":
 									foreach (BaseTable table in tables)
 									{
-										if (table.DataType.Name == comand.Value)
+										attribute = (TableCellAttribute)Attribute.GetCustomAttribute(table.DataType, typeof(TableCellAttribute));
+										if (attribute.DataSaveName == comand.Value)
 										{
 											table.LoadTable(sr, comand);
 										}
@@ -174,6 +177,15 @@ namespace TablesLibrary.Interpreter
 				}
 			}
 			return false;
+		}
+
+		public void RemoveAllTables(Boolean restartCounter)
+		{
+			while (tables.Count > 0)
+			{
+				tables.Remove(tables[0]);
+			}
+			if (restartCounter) counter = 0;
 		}
 
 		public bool RemoveTable(BaseTable table)
