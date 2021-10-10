@@ -9,7 +9,7 @@ using TablesLibrary.Interpreter.Attributes;
 
 namespace TablesLibrary.Interpreter
 {
-    public class Table<Te> : BaseTable, IEnumerable where Te : Cell, new()
+    public abstract class Table<Te> : BaseTable, IEnumerable where Te : Cell, new()
     {
 		protected List<Te> cells = new List<Te>();
 
@@ -27,6 +27,8 @@ namespace TablesLibrary.Interpreter
 		}
 
 		public override Type DataType => typeof(Te);
+
+		public abstract override void ConnectionsSubload(TableCollection tablesCollection);
 
 		public Te[] ToArray()
 		{

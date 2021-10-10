@@ -13,5 +13,10 @@ namespace TablesLibraryTests.ACommonTest.Tables
         public SeriesTable() : base() { }
         public SeriesTable(int id) : base(id) { }
         public SeriesTable(int id, String name) : base(id, name) { }
+
+        public override void ConnectionsSubload(TableCollection tablesCollection)
+        {
+            
+        }
     }
 }

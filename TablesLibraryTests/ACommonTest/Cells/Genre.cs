@@ -12,43 +12,52 @@ namespace TablesLibraryTests.ACommonTest.Cells
 	[TableCell("Genre")]
 	public class Genre : Cell
 	{
-		[Field("name")]
-		private String name = "";
+        private string name = "";
+        private bool isSerialGenre = false;
 
-		[Field("isSerialGenre")]
-		private bool isSerialGenre = false;
+        public Genre() : base() { }
+        public Genre(int id) : base(id) { }
 
-		public Genre() : base() { }
-		public Genre(int id) : base(id) { }
+        protected override void updateThisBody(Cell cell)
+        {
+            Genre genre = (Genre)cell;
 
-		protected override void loadBody(Comand comand)
-		{
-			switch (comand.Paramert)
-			{
-				case "name":
-					this.name = comand.Value;
-					break;
-				case "isSerialGenre":
-					this.isSerialGenre = Convert.ToBoolean(comand.Value);
-					break;
+            name = genre.name;
+            isSerialGenre = genre.isSerialGenre;
+        }
 
-				default:
-					break;
-			}
-		}
+        protected override void saveBody(StreamWriter streamWriter)
+        {
+            streamWriter.Write(FormatParam(nameof(name), name, "", 2));
+            streamWriter.Write(FormatParam(nameof(isSerialGenre), isSerialGenre, false, 2));
+        }
+        protected override void loadBody(Comand comand)
+        {
 
-		protected override void saveBody(StreamWriter streamWriter)
-		{
-			streamWriter.Write(FormatParam(nameof(name), name, "", 2));
-			streamWriter.Write(FormatParam(nameof(isSerialGenre), isSerialGenre, false, 2));
-		}
+            switch (comand.Paramert)
+            {
+                case "name":
+                    name = comand.Value;
+                    break;
+                case "isSerialGenre":
+                    isSerialGenre = Convert.ToBoolean(comand.Value);
+                    break;
 
-		protected override void updateThisBody(Cell cell)
-		{
-			Genre genre = (Genre)cell;
+                default:
+                    break;
+            }
+        }
 
-			this.name = genre.name;
-			this.isSerialGenre = genre.isSerialGenre;
-		}
-	}
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public bool IsSerialGenre
+        {
+            get { return isSerialGenre; }
+            set { isSerialGenre = value; }
+        }
+    }
 }

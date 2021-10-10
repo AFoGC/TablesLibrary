@@ -13,19 +13,21 @@ namespace TablesLibraryTests.ACommonTest.Cells
 	[TableCell("Film")]
 	public class Film : Cell
 	{
-		private String name = "";
+		private string name = "";
 		private Genre genre = null;
 		private int realiseYear = 0;
 		private bool watched = false;
 		private sbyte mark = -1;
 		private DateTime dateOfWatch = new DateTime();
 
-		private String comment = "";
+		private string comment = "";
 		private List<Source> sources = new List<Source>();
 
 		private int countOfviews = 0;
 		private int franshiseId = 0;
 		private sbyte franshiseListIndex = -1;
+
+		private int genreId = 0;
 
 
 		public Film() : base() { }
@@ -35,23 +37,23 @@ namespace TablesLibraryTests.ACommonTest.Cells
 		{
 			Film film = (Film)cell;
 
-			this.name = film.name;
-			this.genre = film.genre;
-			this.realiseYear = film.realiseYear;
-			this.watched = film.watched;
-			this.mark = film.mark;
-			this.dateOfWatch = film.dateOfWatch;
-			this.comment = film.comment;
-			this.sources = film.sources;
-			this.countOfviews = film.countOfviews;
-			this.franshiseId = film.franshiseId;
-			this.franshiseListIndex = film.franshiseListIndex;
+			name = film.name;
+			genre = film.genre;
+			realiseYear = film.realiseYear;
+			watched = film.watched;
+			mark = film.mark;
+			dateOfWatch = film.dateOfWatch;
+			comment = film.comment;
+			sources = film.sources;
+			countOfviews = film.countOfviews;
+			franshiseId = film.franshiseId;
+			franshiseListIndex = film.franshiseListIndex;
 		}
 
 		protected override void saveBody(StreamWriter streamWriter)
 		{
 			streamWriter.Write(FormatParam(nameof(name), name, "", 2));
-			streamWriter.Write(FormatParam(nameof(genre), genre.ID, 0, 2));
+			streamWriter.Write(FormatParam(nameof(genre), genreId, 0, 2));
 			streamWriter.Write(FormatParam(nameof(realiseYear), realiseYear, 0, 2));
 			streamWriter.Write(FormatParam(nameof(watched), watched, false, 2));
 			streamWriter.Write(FormatParam(nameof(mark), mark, -1, 2));
@@ -73,39 +75,37 @@ namespace TablesLibraryTests.ACommonTest.Cells
 			switch (comand.Paramert)
 			{
 				case "name":
-					this.name = comand.Value;
+					name = comand.Value;
 					break;
 				case "genre":
-					//this.genre = MainInfo.Tables.GenresTable.GetElementByIndex(Convert.ToInt32(comand.Value));
-					//this.genre = MainInfo.TableCollection.GetTable<Genre>().GetElementByIndex(Convert.ToInt32(comand.Value));
-					this.genre = MainInfo.Tables.GenresTable.GetElementByIndex(Convert.ToInt32(comand.Value));
+					genreId = Convert.ToInt32(comand.Value);
 					break;
 				case "realiseYear":
-					this.realiseYear = Convert.ToInt32(comand.Value);
+					realiseYear = Convert.ToInt32(comand.Value);
 					break;
 				case "watched":
-					this.watched = Convert.ToBoolean(comand.Value);
+					watched = Convert.ToBoolean(comand.Value);
 					break;
 				case "mark":
-					this.mark = Convert.ToSByte(comand.Value);
+					mark = Convert.ToSByte(comand.Value);
 					break;
 				case "dateOfWatch":
-					this.dateOfWatch = readDate(comand.Value);
+					dateOfWatch = readDate(comand.Value);
 					break;
 				case "comment":
-					this.comment = comand.Value;
+					comment = comand.Value;
 					break;
 				case "sourceUrl":
-					this.sources.Add(Source.ToSource(comand.Value));
+					sources.Add(Source.ToSource(comand.Value));
 					break;
 				case "countOfviews":
-					this.countOfviews = Convert.ToInt32(comand.Value);
+					countOfviews = Convert.ToInt32(comand.Value);
 					break;
 				case "franshiseId":
-					this.franshiseId = Convert.ToInt32(comand.Value);
+					franshiseId = Convert.ToInt32(comand.Value);
 					break;
 				case "franshiseListIndex":
-					this.franshiseListIndex = Convert.ToSByte(comand.Value);
+					franshiseListIndex = Convert.ToSByte(comand.Value);
 					break;
 
 				default:
@@ -113,11 +113,11 @@ namespace TablesLibraryTests.ACommonTest.Cells
 			}
 		}
 
-		private String formatParam(String variableName, Source item, int countOfTabulations)
+		private string formatParam(string variableName, Source item, int countOfTabulations)
 		{
 			if (item.sourceUrl != "")
 			{
-				String export = "";
+				string export = "";
 				for (int i = 0; i < countOfTabulations; i++)
 				{
 					export = export + "\t";
@@ -127,7 +127,7 @@ namespace TablesLibraryTests.ACommonTest.Cells
 			return "";
 		}
 
-		public String Name
+		public string Name
 		{
 			get { return name; }
 			set { name = value; }
@@ -146,7 +146,11 @@ namespace TablesLibraryTests.ACommonTest.Cells
 					return new Genre(0);
 				}
 			}
-			set { genre = value; }
+            set
+            {
+				genre = value;
+				genreId = genre.ID;
+            }
 		}
 
 		public int RealiseYear
@@ -173,7 +177,7 @@ namespace TablesLibraryTests.ACommonTest.Cells
 			set { dateOfWatch = value; }
 		}
 
-		public String Comment
+		public string Comment
 		{
 			get { return comment; }
 			set { comment = value; }
@@ -202,5 +206,10 @@ namespace TablesLibraryTests.ACommonTest.Cells
 			get { return franshiseListIndex; }
 			set { franshiseListIndex = value; }
 		}
+
+		public int GenreId
+        {
+            get { return genreId; }
+        }
 	}
 }

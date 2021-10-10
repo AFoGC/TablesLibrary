@@ -13,5 +13,32 @@ namespace TablesLibraryTests.ACommonTest.Tables
         public CategoriesTable() : base() { }
         public CategoriesTable(int id) : base(id) { }
         public CategoriesTable(int id, String name) : base(id, name) { }
+
+        public override void ConnectionsSubload(TableCollection tablesCollection)
+        {
+            Table<Film> filmsTable = tablesCollection.GetTable<Film>();
+
+            foreach (Category category in this)
+            {
+                while (category.Films.Count != 0)
+                {
+                    category.Films.Remove(category.Films[0]);
+                }
+            }
+
+            foreach (Film film in filmsTable)
+            {
+                if (film.FranshiseId != 0)
+                {
+                    foreach (Category category in this)
+                    {
+                        if (film.FranshiseId == category.ID)
+                        {
+                            category.Films.Add(film);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

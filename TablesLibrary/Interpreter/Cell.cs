@@ -44,12 +44,15 @@ namespace TablesLibrary.Interpreter
 			FieldInfo[] thisFields = thisType.GetFields();
 			FieldInfo[] defFields = defType.GetFields();
 
-			String savename = "";
+			String savename;
+			FieldAttribute fieldAttrib;
 			for (int i = 0; i < thisFields.Length; i++)
 			{
-				if (thisFields[i].GetCustomAttribute<FieldAttribute>() != null)
+				//fieldAttrib = thisFields[i].GetCustomAttribute<FieldAttribute>();
+				fieldAttrib = (FieldAttribute)thisFields[i].GetCustomAttributes(typeof(FieldAttribute));
+				if (fieldAttrib != null)
 				{
-					savename = thisFields[i].GetCustomAttribute<FieldAttribute>().FieldName;
+					savename = fieldAttrib.FieldName;
 					streamWriter.Write(FormatParam(savename, thisFields[i].GetValue(this), defFields[i].GetValue(defaultCell), 2));
 				}
 			}

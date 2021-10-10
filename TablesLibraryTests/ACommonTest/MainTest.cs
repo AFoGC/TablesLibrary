@@ -17,6 +17,7 @@ namespace TablesLibraryTests.ACommonTest
 			//TableCollection collection = 
 			MainInfo.TableCollection.TableFilePath = @"F:\filmsDirectory\Testy.fdbc";
 			MainInfo.TableCollection.LoadTables();
+			MainInfo.TableCollection.ConnectionsSubload();
 			MainInfo.TableCollection.TableFilePath = @"F:\filmsDirectory\Save.fdbc";
 			MainInfo.TableCollection.SaveTables();
 

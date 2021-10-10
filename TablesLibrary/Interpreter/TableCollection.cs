@@ -25,6 +25,14 @@ namespace TablesLibrary.Interpreter
 			this.tableFilePath = tableFilePath;
 		}
 
+		public void ConnectionsSubload()
+        {
+            foreach (BaseTable table in tables)
+            {
+				table.ConnectionsSubload(this);
+            }
+        }
+
 		public BaseTable this[Type type]
 		{
 			get

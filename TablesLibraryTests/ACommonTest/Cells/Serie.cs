@@ -9,83 +9,83 @@ using TablesLibrary.Interpreter.Attributes;
 
 namespace TablesLibraryTests.ACommonTest.Cells
 {
-	[TableCell("Serie")]
-	public class Serie : Cell
+    [TableCell("Serie", true)]
+    public class Serie : Cell
     {
-		[Field("filmId")]
-		private int filmId = 0;
-		[Field("startWatchDate")]
-		private DateTime startWatchDate = new DateTime();
-		[Field("countOfWatchedSeries")]
-		private int countOfWatchedSeries = 0;
-		[Field("totalSeries")]
-		private int totalSeries = 0;
+        [Field("filmId")]
+        private int filmId = 0;
+        [Field("startWatchDate")]
+        private DateTime startWatchDate = new DateTime();
+        [Field("countOfWatchedSeries")]
+        private int countOfWatchedSeries = 0;
+        [Field("totalSeries")]
+        private int totalSeries = 0;
 
-		public Serie() : base() { }
-		public Serie(int id) : base(id) { }
+        public Serie() : base() { }
+        public Serie(int id) : base(id) { }
 
-		protected override void updateThisBody(Cell cell)
-		{
-			Serie serie = (Serie)cell;
+        protected override void updateThisBody(Cell cell)
+        {
+            Serie serie = (Serie)cell;
 
-			this.filmId = serie.filmId;
-			this.startWatchDate = serie.startWatchDate;
-			this.countOfWatchedSeries = serie.countOfWatchedSeries;
-			this.totalSeries = serie.totalSeries;
-		}
+            filmId = serie.filmId;
+            startWatchDate = serie.startWatchDate;
+            countOfWatchedSeries = serie.countOfWatchedSeries;
+            totalSeries = serie.totalSeries;
+        }
 
-		protected override void saveBody(StreamWriter streamWriter)
-		{
-			streamWriter.Write(FormatParam(nameof(filmId), filmId, 0, 2));
-			streamWriter.Write(FormatParam(nameof(startWatchDate), startWatchDate, new DateTime(), 2));
-			streamWriter.Write(FormatParam(nameof(countOfWatchedSeries), countOfWatchedSeries, 0, 2));
-			streamWriter.Write(FormatParam(nameof(totalSeries), totalSeries, 0, 2));
-		}
+        protected override void saveBody(StreamWriter streamWriter)
+        {
+            streamWriter.Write(FormatParam(nameof(filmId), filmId, 0, 2));
+            streamWriter.Write(FormatParam(nameof(startWatchDate), startWatchDate, new DateTime(), 2));
+            streamWriter.Write(FormatParam(nameof(countOfWatchedSeries), countOfWatchedSeries, 0, 2));
+            streamWriter.Write(FormatParam(nameof(totalSeries), totalSeries, 0, 2));
+        }
 
-		protected override void loadBody(Comand comand)
-		{
-			switch (comand.Paramert)
-			{
-				case "filmId":
-					this.filmId = Convert.ToInt32(comand.Value);
-					break;
-				case "startWatchDate":
-					this.startWatchDate = readDate(comand.Value);
-					break;
-				case "countOfWatchedSeries":
-					this.countOfWatchedSeries = Convert.ToInt32(comand.Value);
-					break;
-				case "totalSeries":
-					this.totalSeries = Convert.ToInt32(comand.Value);
-					break;
+        protected override void loadBody(Comand comand)
+        {
+            switch (comand.Paramert)
+            {
+                case "filmId":
+                    filmId = Convert.ToInt32(comand.Value);
+                    break;
+                case "startWatchDate":
+                    startWatchDate = readDate(comand.Value);
+                    break;
+                case "countOfWatchedSeries":
+                    countOfWatchedSeries = Convert.ToInt32(comand.Value);
+                    break;
+                case "totalSeries":
+                    totalSeries = Convert.ToInt32(comand.Value);
+                    break;
 
-				default:
-					break;
-			}
-		}
+                default:
+                    break;
+            }
+        }
 
-		public int FilmId
-		{
-			get { return filmId; }
-			set { filmId = value; }
-		}
+        public int FilmId
+        {
+            get { return filmId; }
+            set { filmId = value; }
+        }
 
-		public DateTime StartWatchDate
-		{
-			get { return startWatchDate; }
-			set { startWatchDate = value; }
-		}
+        public DateTime StartWatchDate
+        {
+            get { return startWatchDate; }
+            set { startWatchDate = value; }
+        }
 
-		public int CountOfWatchedSeries
-		{
-			get { return countOfWatchedSeries; }
-			set { countOfWatchedSeries = value; }
-		}
+        public int CountOfWatchedSeries
+        {
+            get { return countOfWatchedSeries; }
+            set { countOfWatchedSeries = value; }
+        }
 
-		public int TotalSeries
-		{
-			get { return totalSeries; }
-			set { totalSeries = value; }
-		}
-	}
+        public int TotalSeries
+        {
+            get { return totalSeries; }
+            set { totalSeries = value; }
+        }
+    }
 }
