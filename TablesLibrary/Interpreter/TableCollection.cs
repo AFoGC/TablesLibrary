@@ -15,6 +15,8 @@ namespace TablesLibrary.Interpreter
 		private int counter = 0;
 		private String tableFilePath = null;
 
+		public event EventHandler TableLoad;
+
 		public TableCollection()
 		{
 
@@ -86,6 +88,7 @@ namespace TablesLibrary.Interpreter
 
 		public bool LoadTables()
 		{
+			bool export;
 			using (StreamReader sr = new StreamReader(tableFilePath, System.Text.Encoding.Default))
 			{
 				if (sr.ReadLine() == "<DocStart>")
@@ -125,13 +128,20 @@ namespace TablesLibrary.Interpreter
 					{
 						counter = tables[tables.Count - 1].ID;
 					}
-					return true;
+					export = true;
 				}
 				else
 				{
-					return false;
+					export = false;
 				}
 			}
+
+			this.ConnectionsSubload();
+
+			EventHandler handler = TableLoad;
+			if (null != handler) handler(this, EventArgs.Empty);
+
+			return export;
 		}
 
 		public void SaveTables()
