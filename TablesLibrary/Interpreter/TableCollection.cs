@@ -16,6 +16,7 @@ namespace TablesLibrary.Interpreter
 		private String tableFilePath = null;
 
 		public event EventHandler TableLoad;
+		public event EventHandler TableSave;
 
 		public TableCollection()
 		{
@@ -157,6 +158,9 @@ namespace TablesLibrary.Interpreter
 
 				sw.WriteLine("<DocEnd>");
 			}
+
+			EventHandler handler = TableSave;
+			if (null != handler) handler(this, EventArgs.Empty);
 		}
 
 		public void AddTable(Type type)

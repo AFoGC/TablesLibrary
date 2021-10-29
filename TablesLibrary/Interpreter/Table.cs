@@ -89,6 +89,7 @@ namespace TablesLibrary.Interpreter
 		public bool AddWithoutReindexation(Te import)
 		{
 			cells.Add(import);
+			++counter;
 			return true;
 		}
 
