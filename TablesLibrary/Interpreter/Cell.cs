@@ -11,6 +11,7 @@ namespace TablesLibrary.Interpreter
 {
 	public abstract class Cell
 	{
+		//Пососеш)ок
 		//
 		//
 		[Field("id")]
