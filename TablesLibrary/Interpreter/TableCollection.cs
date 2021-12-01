@@ -28,6 +28,9 @@ namespace TablesLibrary.Interpreter
 			this.tableFilePath = tableFilePath;
 		}
 
+		/// <summary> 
+		/// Метод, что вызывает метод ConnectionsSubload во всех таблицах коллекци 
+		/// </summary>
 		public void ConnectionsSubload()
         {
             foreach (BaseTable table in tables)
@@ -52,6 +55,9 @@ namespace TablesLibrary.Interpreter
 			}
 		}
 
+		/// <summary> 
+		/// Возвращает таблицу, что содержит элементы указанного типа
+		/// </summary>
 		public Table<T> GetTable<T>() where T : Cell, new()
         {
 			Type type = typeof(T);
@@ -87,10 +93,15 @@ namespace TablesLibrary.Interpreter
 			return tables.ToArray();
 		}
 
+
+		/// <summary>
+		/// Загружает коллекцию таблиц из указанного пути в TableFilePath
+		/// </summary>
+		/// <returns></returns>
 		public bool LoadTables()
 		{
 			bool export;
-			using (StreamReader sr = new StreamReader(tableFilePath, System.Text.Encoding.Default))
+			using (StreamReader sr = new StreamReader(tableFilePath, Encoding.Default))
 			{
 				if (sr.ReadLine() == "<DocStart>")
 				{
@@ -145,9 +156,92 @@ namespace TablesLibrary.Interpreter
 			return export;
 		}
 
+		/// <summary>
+		/// Загружает коллекцию таблиц из указанного пути в TableFilePath
+		/// </summary>
+		/// <returns></returns>
+		public bool LoadTables(Encoding encoding)
+		{
+			bool export;
+			using (StreamReader sr = new StreamReader(tableFilePath, encoding))
+			{
+				if (sr.ReadLine() == "<DocStart>")
+				{
+					Comand comand = new Comand();
+					bool endReading = false;
+					TableCellAttribute attribute;
+					while (endReading == false)
+					{
+						comand.getComand(sr.ReadLine());
+						if (comand.IsComand)
+						{
+							switch (comand.Paramert)
+							{
+								case "Table":
+									foreach (BaseTable table in tables)
+									{
+										attribute = (TableCellAttribute)Attribute.GetCustomAttribute(table.DataType, typeof(TableCellAttribute));
+										if (attribute.DataSaveName == comand.Value)
+										{
+											table.LoadTable(sr, comand);
+										}
+									}
+									break;
+
+								case "DocEnd":
+									endReading = true;
+									break;
+
+								default:
+									break;
+							}
+						}
+
+					}
+					if (tables.Count != 0)
+					{
+						counter = tables[tables.Count - 1].ID;
+					}
+					export = true;
+				}
+				else
+				{
+					export = false;
+				}
+			}
+
+			this.ConnectionsSubload();
+
+			EventHandler handler = TableLoad;
+			if (null != handler) handler(this, EventArgs.Empty);
+
+			return export;
+		}
+
+		/// <summary>
+		/// Сохраняет таблицу по указанному пути в TableFilePath
+		/// </summary>
 		public void SaveTables()
 		{
-			using (StreamWriter sw = new StreamWriter(tableFilePath, false, System.Text.Encoding.Default))
+			using (StreamWriter sw = new StreamWriter(tableFilePath, false, Encoding.Default))
+			{
+				sw.WriteLine("<DocStart>");
+
+				foreach (BaseTable table in tables)
+				{
+					table.SaveTable(sw);
+				}
+
+				sw.WriteLine("<DocEnd>");
+			}
+
+			EventHandler handler = TableSave;
+			if (null != handler) handler(this, EventArgs.Empty);
+		}
+
+		public void SaveTables(Encoding encoding)
+		{
+			using (StreamWriter sw = new StreamWriter(tableFilePath, false, encoding))
 			{
 				sw.WriteLine("<DocStart>");
 
