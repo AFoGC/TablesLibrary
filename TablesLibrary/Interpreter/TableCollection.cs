@@ -17,15 +17,17 @@ namespace TablesLibrary.Interpreter
 
 		public event EventHandler TableLoad;
 		public event EventHandler TableSave;
+		public Encoding FileEncoding { get; set; }
 
 		public TableCollection()
 		{
-
+			FileEncoding = Encoding.Default;
 		}
 
 		public TableCollection(String tableFilePath)
 		{
 			this.tableFilePath = tableFilePath;
+			FileEncoding = Encoding.Default;
 		}
 
 		/// <summary> 
@@ -101,69 +103,7 @@ namespace TablesLibrary.Interpreter
 		public bool LoadTables()
 		{
 			bool export;
-			using (StreamReader sr = new StreamReader(tableFilePath, Encoding.Default))
-			{
-				if (sr.ReadLine() == "<DocStart>")
-				{
-					Comand comand = new Comand();
-					bool endReading = false;
-					TableCellAttribute attribute;
-					while (endReading == false)
-					{
-						comand.getComand(sr.ReadLine());
-						if (comand.IsComand)
-						{
-							switch (comand.Paramert)
-							{
-								case "Table":
-									foreach (BaseTable table in tables)
-									{
-										attribute = (TableCellAttribute)Attribute.GetCustomAttribute(table.DataType, typeof(TableCellAttribute));
-										if (attribute.DataSaveName == comand.Value)
-										{
-											table.LoadTable(sr, comand);
-										}
-									}
-									break;
-
-								case "DocEnd":
-									endReading = true;
-									break;
-
-								default:
-									break;
-							}
-						}
-
-					}
-					if (tables.Count != 0)
-					{
-						counter = tables[tables.Count - 1].ID;
-					}
-					export = true;
-				}
-				else
-				{
-					export = false;
-				}
-			}
-
-			this.ConnectionsSubload();
-
-			EventHandler handler = TableLoad;
-			if (null != handler) handler(this, EventArgs.Empty);
-
-			return export;
-		}
-
-		/// <summary>
-		/// Загружает коллекцию таблиц из указанного пути в TableFilePath
-		/// </summary>
-		/// <returns></returns>
-		public bool LoadTables(Encoding encoding)
-		{
-			bool export;
-			using (StreamReader sr = new StreamReader(tableFilePath, encoding))
+			using (StreamReader sr = new StreamReader(tableFilePath, FileEncoding))
 			{
 				if (sr.ReadLine() == "<DocStart>")
 				{
@@ -223,25 +163,7 @@ namespace TablesLibrary.Interpreter
 		/// </summary>
 		public void SaveTables()
 		{
-			using (StreamWriter sw = new StreamWriter(tableFilePath, false, Encoding.Default))
-			{
-				sw.WriteLine("<DocStart>");
-
-				foreach (BaseTable table in tables)
-				{
-					table.SaveTable(sw);
-				}
-
-				sw.WriteLine("<DocEnd>");
-			}
-
-			EventHandler handler = TableSave;
-			if (null != handler) handler(this, EventArgs.Empty);
-		}
-
-		public void SaveTables(Encoding encoding)
-		{
-			using (StreamWriter sw = new StreamWriter(tableFilePath, false, encoding))
+			using (StreamWriter sw = new StreamWriter(tableFilePath, false, FileEncoding))
 			{
 				sw.WriteLine("<DocStart>");
 
