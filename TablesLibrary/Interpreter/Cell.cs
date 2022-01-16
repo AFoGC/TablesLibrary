@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -9,18 +10,15 @@ using TablesLibrary.Interpreter.Attributes;
 
 namespace TablesLibrary.Interpreter
 {
-	public abstract class Cell
+	public abstract class Cell : INotifyPropertyChanged
 	{
-		//Пососеш)ок
-		//
-		//
 		[Field("id")]
 		private int id = 0;
 
 		public int ID
 		{
 			get { return id; }
-			set { id = value; }
+			set { id = value; OnPropertyChanged(nameof(ID)); }
 		}
 
 		public Cell()
@@ -50,7 +48,6 @@ namespace TablesLibrary.Interpreter
 			FieldAttribute fieldAttrib;
 			for (int i = 0; i < thisFields.Length; i++)
 			{
-				//fieldAttrib = thisFields[i].GetCustomAttribute<FieldAttribute>();
 				fieldAttrib = (FieldAttribute)thisFields[i].GetCustomAttributes(typeof(FieldAttribute));
 				if (fieldAttrib != null)
 				{
@@ -204,6 +201,20 @@ namespace TablesLibrary.Interpreter
 
 			return export + date.Year.ToString();
 		}
+
+		public void OnPropertyChanged(PropertyChangedEventArgs e)
+		{
+			PropertyChangedEventHandler handler = PropertyChanged;
+			if (handler != null)
+				handler(this, e);
+		}
+
+		protected void OnPropertyChanged(string propertyName)
+		{
+			OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		//---------------------------get data static methods------------------------------------------
 
