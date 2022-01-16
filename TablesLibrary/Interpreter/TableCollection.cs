@@ -121,10 +121,20 @@ namespace TablesLibrary.Interpreter
 									foreach (BaseTable table in tables)
 									{
 										attribute = (TableCellAttribute)Attribute.GetCustomAttribute(table.DataType, typeof(TableCellAttribute));
-										if (attribute.DataSaveName == comand.Value)
-										{
-											table.LoadTable(sr, comand);
+                                        if (attribute != null)
+                                        {
+											if (attribute.DataSaveName == comand.Value)
+											{
+												table.LoadTable(sr, comand);
+											}
 										}
+                                        else
+                                        {
+                                            if (table.GetType().Name == comand.Value)
+                                            {
+												table.LoadTable(sr, comand);
+											}
+                                        }
 									}
 									break;
 

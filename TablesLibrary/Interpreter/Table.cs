@@ -74,22 +74,15 @@ namespace TablesLibrary.Interpreter
 
 		public bool AddElement(Te import)
 		{
-			Te cell = (Te)Activator.CreateInstance(typeof(Te), ++counter);
-			if (cell.UpdateThis(import))
-			{
-				cells.Add(cell);
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			import.ID = ++counter;
+			cells.Add(import);
+			return true;
 		}
 
 		public bool AddWithoutReindexation(Te import)
 		{
 			cells.Add(import);
-			++counter;
+			counter = import.ID;
 			return true;
 		}
 
@@ -156,7 +149,14 @@ namespace TablesLibrary.Interpreter
 		{
 			get
 			{
-				return cells[cells.Count - 1];
+				if (cells.Count != 0)
+				{
+					return cells[cells.Count - 1];
+				}
+                else
+                {
+					return DefaultCell;
+                }
 			}
 		}
 
@@ -168,11 +168,21 @@ namespace TablesLibrary.Interpreter
 
 			TableCellAttribute attribute = (TableCellAttribute)Attribute.GetCustomAttribute(typeof(Te), typeof(TableCellAttribute));
 
-			if (attribute.IsAutoSave)
+            if (attribute != null)
             {
-				foreach (Te cell in cells)
+				if (attribute.IsAutoSave)
 				{
-					cell.saveCell(streamWriter, defaultCell);
+					foreach (Te cell in cells)
+					{
+						cell.saveCell(streamWriter, defaultCell);
+					}
+				}
+				else
+				{
+					foreach (Te cell in cells)
+					{
+						cell.saveCell(streamWriter);
+					}
 				}
 			}
             else
@@ -182,6 +192,7 @@ namespace TablesLibrary.Interpreter
 					cell.saveCell(streamWriter);
 				}
 			}
+			
 
 			streamWriter.WriteLine("<Table>");
 			streamWriter.WriteLine();
@@ -241,7 +252,16 @@ namespace TablesLibrary.Interpreter
 			}
 
 			TableCellAttribute attribute = (TableCellAttribute)Attribute.GetCustomAttribute(typeof(Te), typeof(TableCellAttribute));
-			return export + "<Table: " + attribute.DataSaveName + ">\n";
+			String savename;
+            if (attribute == null)
+            {
+				savename = typeof(Te).Name;
+			}
+            else
+            {
+				savename = attribute.DataSaveName;
+			}
+			return export + "<Table: " + savename + ">\n";
 		}
 
         IEnumerator IEnumerable.GetEnumerator()

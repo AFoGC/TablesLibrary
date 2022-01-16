@@ -20,6 +20,7 @@ namespace TablesLibrary.Interpreter
 		public int ID
 		{
 			get { return id; }
+			set { id = value; }
 		}
 
 		public Cell()
