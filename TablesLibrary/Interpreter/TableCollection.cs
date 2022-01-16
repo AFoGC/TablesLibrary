@@ -41,49 +41,6 @@ namespace TablesLibrary.Interpreter
             }
         }
 
-		public BaseTable this[Type type]
-		{
-			get
-			{
-				foreach (BaseTable baseTable in tables)
-				{
-					if (baseTable.DataType == type)
-					{
-						return baseTable;
-					}
-				}
-
-				throw new IndexOutOfRangeException();
-			}
-		}
-
-		/// <summary> 
-		/// Возвращает таблицу, что содержит элементы указанного типа
-		/// </summary>
-		public Table<T> GetTable<T>() where T : Cell, new()
-        {
-			Type type = typeof(T);
-
-            foreach (BaseTable table in tables)
-            {
-                if (table.DataType == type)
-                {
-					return (Table<T>)table;
-                }
-            }
-
-			throw new TypeLoadException();
-        }
-
-		public BaseTable this[int index]
-		{
-			get
-			{
-				return tables[index];
-			}
-		}
-
-
 		public String TableFilePath
 		{
 			get { return tableFilePath; }
@@ -189,69 +146,106 @@ namespace TablesLibrary.Interpreter
 			if (null != handler) handler(this, EventArgs.Empty);
 		}
 
+		public BaseTable this[Type type]
+		{
+			get
+			{
+				foreach (BaseTable baseTable in tables)
+				{
+					if (baseTable.DataType == type)
+					{
+						return baseTable;
+					}
+				}
+
+				throw new IndexOutOfRangeException();
+			}
+		}
+
+		/// <summary> 
+		/// Возвращает таблицу, что содержит элементы указанного типа
+		/// </summary>
+		public Table<T> GetTable<T>() where T : Cell, new()
+		{
+			Type type = typeof(T);
+
+			foreach (BaseTable table in tables)
+			{
+				if (table.DataType == type)
+				{
+					return (Table<T>)table;
+				}
+			}
+
+			return null;
+		}
+
+		public BaseTable this[int index]
+		{
+			get
+			{
+				return tables[index];
+			}
+		}
+
 		public void AddTable(Type type)
 		{
 			Type genericTableType = typeof(Table<>).MakeGenericType(type);
-			tables.Add((BaseTable)Activator.CreateInstance(genericTableType, ++counter));
+			BaseTable baseTable = (BaseTable)Activator.CreateInstance(genericTableType, ++counter);
+
+			baseTable.TableCollection = this;
+			tables.Add(baseTable);
 		}
 
 		public void AddTable<T>(Table<T> import) where T : Cell, new()
 		{
 			import.ID = ++counter;
+
+			import.TableCollection = this;
 			tables.Add(import);
-		}
-
-		public bool UpdateTable(BaseTable import)
-		{
-			for (int i = 0; i < tables.Count; i++)
-			{
-				if (tables[i].ID == import.ID && tables[i].DataType == import.DataType)
-				{
-					tables[i] = import;
-					return true;
-				}
-			}
-			return false;
-		}
-
-		public bool RemoveTable(int id)
-		{
-			for (int i = 0; i < tables.Count; i++)
-			{
-				if (tables[i].ID == id)
-				{
-					tables.RemoveAt(i);
-					return true;
-				}
-			}
-			return false;
 		}
 
 		public void RemoveAllTables(Boolean restartCounter)
 		{
 			while (tables.Count > 0)
 			{
-				tables.Remove(tables[0]);
+				RemoveTable(tables[0]);
 			}
 			if (restartCounter) counter = 0;
 		}
 
 		public bool RemoveTable(BaseTable table)
 		{
-			return tables.Remove(table);
+			bool removed = tables.Remove(table);
+			table.TableCollection = null;
+			return removed;
+		}
+
+		public bool RemoveTable(int tableId)
+		{
+			BaseTable table = null;
+			foreach (var item in tables)
+			{
+				if (item.ID == tableId)
+				{
+					table = item;
+					break;
+				}
+			}
+			return RemoveTable(table);
 		}
 
 		public bool RemoveTable(Type type)
 		{
-			for (int i = 0; i < tables.Count; i++)
-			{
-				if (tables[i].DataType == type)
-				{
-					tables.RemoveAt(i);
-					return true;
-				}
-			}
-			return false;
+			BaseTable table = null;
+            foreach (var item in tables)
+            {
+                if (item.DataType == type)
+                {
+					table = item;
+                }
+            }
+			return RemoveTable(table);
 		}
 
         IEnumerator IEnumerable.GetEnumerator()
