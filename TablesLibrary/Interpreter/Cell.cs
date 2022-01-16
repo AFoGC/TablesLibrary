@@ -163,43 +163,8 @@ namespace TablesLibrary.Interpreter
 			}
 			else
 			{
-				if (item.GetType() == typeof(DateTime))
-				{
-					DateTime exp = (DateTime)(object)item;
-					return formatDate(exp);
-				}
-				else
-				{
-					return item.ToString();
-				}
+				return item.ToString();
 			}
-		}
-
-		private static String formatDate(DateTime date)
-		{
-			String export = "";
-
-			if (date.Day < 10)
-			{
-				export = export + "0" + date.Day.ToString();
-			}
-			else
-			{
-				export = export + date.Day.ToString();
-			}
-			export = export + ".";
-
-			if (date.Month < 10)
-			{
-				export = export + "0" + date.Month.ToString();
-			}
-			else
-			{
-				export = export + date.Month.ToString();
-			}
-			export = export + ".";
-
-			return export + date.Year.ToString();
 		}
 
 		public void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -215,23 +180,5 @@ namespace TablesLibrary.Interpreter
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
-
-		//---------------------------get data static methods------------------------------------------
-
-		public static DateTime readDate(String data)
-		{
-			try
-			{
-				return new DateTime(
-				Convert.ToInt32("" + data[6] + data[7] + data[8] + data[9]),
-				Convert.ToInt32("" + data[3] + data[4]),
-				Convert.ToInt32("" + data[0] + data[1])
-				);
-			}
-			catch
-			{
-				return new DateTime();
-			}
-		}
 	}
 }
