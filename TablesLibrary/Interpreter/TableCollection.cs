@@ -199,9 +199,9 @@ namespace TablesLibrary.Interpreter
 
 		public void AddTable<T>(Table<T> import) where T : Cell, new()
 		{
+			import.TableCollection = this;
 			import.ID = ++counter;
 
-			import.TableCollection = this;
 			tables.Add(import);
 		}
 

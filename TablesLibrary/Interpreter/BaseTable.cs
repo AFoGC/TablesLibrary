@@ -47,6 +47,7 @@ namespace TablesLibrary.Interpreter
                 if (tableCollection != null && value != tableCollection)
                 {
                     tableCollection.RemoveTable(this);
+                    id = 0;
                 }
                 tableCollection = value;
             }
