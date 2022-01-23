@@ -26,31 +26,23 @@ namespace TablesLibraryTests.ACommonTest
 
 		public static class Tables
 		{
-			private static CategoriesTable categoriesTable;
 			private static GenresTable genresTable;
 			private static FilmsTable filmsTable;
-			private static SeriesTable seriesTable;
 
 
 			static Tables()
             {
-				categoriesTable = new CategoriesTable();
 				genresTable = new GenresTable();
 				filmsTable = new FilmsTable();
-				seriesTable = new SeriesTable();
 
-				TableCollection.AddTable(categoriesTable);
 				TableCollection.AddTable(genresTable);
 				TableCollection.AddTable(filmsTable);
-				TableCollection.AddTable(seriesTable);
 			}
 
 			public static void Initialize() { }
 
-			public static CategoriesTable CategoriesTable { get { return categoriesTable; } }
 			public static GenresTable GenresTable { get { return genresTable; } }
 			public static FilmsTable FilmsTable { get { return filmsTable; } }
-			public static SeriesTable SeriesTable { get { return seriesTable; } }
 		}
 	}
 }

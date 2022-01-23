@@ -10,10 +10,6 @@ namespace TablesLibraryTests.ACommonTest.Tables
 {
     public class GenresTable : Table<Genre>
     {
-        public GenresTable() : base() { }
-        public GenresTable(int id) : base(id) { }
-        public GenresTable(int id, String name) : base(id, name) { }
-
         public override void ConnectionsSubload(TableCollection tablesCollection)
         {
             

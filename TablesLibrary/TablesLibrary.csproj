@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interpreter\Attributes\ConnectionAttribute.cs" />
     <Compile Include="Interpreter\Attributes\TableCellAttribute.cs" />
     <Compile Include="Interpreter\Attributes\FieldAttribute.cs" />
+    <Compile Include="Interpreter\Attributes\TLCollection.cs" />
     <Compile Include="Interpreter\BaseTable.cs" />
     <Compile Include="Interpreter\Cell.cs" />
     <Compile Include="Interpreter\Comand.cs" />

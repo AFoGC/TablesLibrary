@@ -9,55 +9,55 @@ using TablesLibrary.Interpreter.Attributes;
 
 namespace TablesLibraryTests.ACommonTest.Cells
 {
-	[TableCell("Genre")]
-	public class Genre : Cell
-	{
-        private string name = "";
-        private bool isSerialGenre = false;
+    [TableCell("Genre", true)]
+    public class Genre : Cell
+    {
+        [Field("Name")]
+        private String name;
+        [Field("IsSerial")]
+        private Boolean isSerial;
 
-        public Genre() : base() { }
-        public Genre(int id) : base(id) { }
-
-        protected override void updateThisBody(Cell cell)
-        {
-            Genre genre = (Genre)cell;
-
-            name = genre.name;
-            isSerialGenre = genre.isSerialGenre;
-        }
-
-        protected override void saveBody(StreamWriter streamWriter)
-        {
-            streamWriter.Write(FormatParam(nameof(name), name, "", 2));
-            streamWriter.Write(FormatParam(nameof(isSerialGenre), isSerialGenre, false, 2));
-        }
-        protected override void loadBody(Comand comand)
-        {
-
-            switch (comand.Paramert)
-            {
-                case "name":
-                    name = comand.Value;
-                    break;
-                case "isSerialGenre":
-                    isSerialGenre = Convert.ToBoolean(comand.Value);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        public string Name
+        public String Name
         {
             get { return name; }
             set { name = value; }
         }
 
-        public bool IsSerialGenre
+        public Boolean IsSerial
         {
-            get { return isSerialGenre; }
-            set { isSerialGenre = value; }
+            get { return isSerial; }
+            set { isSerial = value; }
+        }
+
+        protected override void loadBody(Comand comand)
+        {
+            /*
+            switch (comand.Paramert)
+            {
+                case "name":
+                    name = comand.Value;
+                    break;
+                case "isSerial":
+                    isSerial = Convert.ToBoolean(comand.Value);
+                    break;
+
+                default:
+                    break;
+            }
+            */
+            throw new NotImplementedException();
+        }
+
+        protected override void saveBody(StreamWriter streamWriter)
+        {
+            //streamWriter.Write(FormatParam("name", name, "", 2));
+            //streamWriter.Write(FormatParam("isSerialGenre", isSerial, false, 2));
+            throw new NotImplementedException();
+        }
+
+        protected override void updateThisBody(Cell cell)
+        {
+            throw new NotImplementedException();
         }
     }
 }

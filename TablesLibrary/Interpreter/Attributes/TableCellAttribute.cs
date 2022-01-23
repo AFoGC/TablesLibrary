@@ -9,30 +9,21 @@ namespace TablesLibrary.Interpreter.Attributes
 	[AttributeUsage(AttributeTargets.Class)]
 	public class TableCellAttribute : Attribute
 	{
-		Boolean isAutoSave;
-		String dataSavename;
+		public String DataSaveName { get; private set; }
 
-		public String DataSaveName
-        {
-            get { return dataSavename; }
-        }
-
-		public Boolean IsAutoSave
-        {
-            get { return isAutoSave; }
-        }
+		public Boolean IsAutoSave { get; private set; }
 
 
 		public TableCellAttribute(String dataSavename, Boolean isAutoSave)
         {
-			this.dataSavename = dataSavename;
-			this.isAutoSave = isAutoSave;
+			this.DataSaveName = dataSavename;
+			this.IsAutoSave = isAutoSave;
         }
 
 		public TableCellAttribute(String dataSavename)
 		{
-			this.dataSavename = dataSavename;
-			this.isAutoSave = false;
+			this.DataSaveName = dataSavename;
+			this.IsAutoSave = false;
 		}
 	}
 }

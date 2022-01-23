@@ -8,14 +8,10 @@ using TablesLibraryTests.ACommonTest.Cells;
 
 namespace TablesLibraryTests.ACommonTest.Tables
 {
-	public class FilmsTable : Table<Film>
-	{
-		public FilmsTable() : base() { }
-		public FilmsTable(int id) : base(id) { }
-		public FilmsTable(int id, String name) : base(id, name) { }
-
-		public override void ConnectionsSubload(TableCollection tablesCollection)
-		{
+    public class FilmsTable : Table<Film>
+    {
+        public override void ConnectionsSubload(TableCollection tablesCollection)
+        {
 			Table<Genre> genresTable = tablesCollection.GetTable<Genre>();
 			foreach (Film film in this)
 			{
@@ -36,5 +32,5 @@ namespace TablesLibraryTests.ACommonTest.Tables
 				}
 			}
 		}
-	}
+    }
 }

@@ -9,15 +9,10 @@ namespace TablesLibrary.Interpreter.Attributes
     [AttributeUsage(AttributeTargets.Field)]
     public class FieldAttribute : Attribute
     {
-        private String fieldName;
-        public String FieldName
-        {
-            get { return fieldName; }
-        }
-
+        public String FieldName { get; private set; }
         public FieldAttribute(String fieldName)
         {
-            this.fieldName = fieldName;
+            this.FieldName = fieldName;
         }
     }
 }

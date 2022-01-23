@@ -12,7 +12,7 @@ namespace TablesLibrary.Interpreter
 {
 	public abstract class Cell : INotifyPropertyChanged
 	{
-		[Field("id")]
+		[Field("ID")]
 		private int id = 0;
 
 		public int ID
@@ -39,20 +39,19 @@ namespace TablesLibrary.Interpreter
 		protected void saveBody(StreamWriter streamWriter, Cell defaultCell)
 		{
 			Type thisType = this.GetType();
-			Type defType = defaultCell.GetType();
 
-			FieldInfo[] thisFields = thisType.GetFields();
-			FieldInfo[] defFields = defType.GetFields();
+			FieldInfo[] thisFields = thisType.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 
 			String savename;
 			FieldAttribute fieldAttrib;
+			streamWriter.Write(FormatParam("id", ID, defaultCell.id, 2));
 			for (int i = 0; i < thisFields.Length; i++)
 			{
-				fieldAttrib = (FieldAttribute)thisFields[i].GetCustomAttributes(typeof(FieldAttribute));
+				fieldAttrib = (FieldAttribute)thisFields[i].GetCustomAttribute(typeof(FieldAttribute));
 				if (fieldAttrib != null)
 				{
 					savename = fieldAttrib.FieldName;
-					streamWriter.Write(FormatParam(savename, thisFields[i].GetValue(this), defFields[i].GetValue(defaultCell), 2));
+					streamWriter.Write(FormatParam(savename, thisFields[i].GetValue(this), thisFields[i].GetValue(defaultCell), 2));
 				}
 			}
 		}
@@ -89,15 +88,23 @@ namespace TablesLibrary.Interpreter
 		public void loadCell(StreamReader streamReader, Comand comand)
 		{
 			bool endReading = false;
+			String savename;
+			TableCellAttribute attribute;
 
 			while (endReading == false)
 			{
 				comand.getComand(streamReader.ReadLine());
 				if (comand.IsComand)
-				{
+				{					
+					attribute = (TableCellAttribute)Attribute.GetCustomAttribute(this.GetType(), typeof(TableCellAttribute));
+					if (attribute != null)
+						savename = attribute.DataSaveName;
+					else
+						savename = this.GetType().Name;
 
-					//Переделать условие this.GetType().Name
-					if (this.GetType().Name != comand.Paramert)
+
+
+					if (savename != comand.Paramert)
 					{
                         if (comand.Paramert != "id")
                         {
