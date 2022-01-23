@@ -31,6 +31,22 @@ namespace TablesLibrary.Interpreter
 			this.id = id;
 		}
 
+		private BaseTable parentTable = null;
+
+		internal void SetParentTable<T>(Table<T> table) where T : Cell, new()
+        {
+			Table<T> pTable = (Table<T>)parentTable;
+			if (pTable != null)
+            {
+				table.Remove((T)this);
+			}
+			parentTable = table;
+        }
+
+		internal Table<T> GetParentTable<T>() where T : Cell, new()
+        {
+			return (Table<T>)parentTable;
+        }
 
 		protected abstract void updateThisBody(Cell cell);
 		protected abstract void saveBody(StreamWriter streamWriter);

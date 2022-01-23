@@ -67,6 +67,7 @@ namespace TablesLibrary.Interpreter
 		public bool AddElement()
 		{
 			Te cell = (Te)Activator.CreateInstance(typeof(Te), ++counter);
+			cell.SetParentTable(this);
 			cells.Add(cell);
 
 			return true;
@@ -75,6 +76,7 @@ namespace TablesLibrary.Interpreter
 		public bool AddElement(Te import)
 		{
 			import.ID = ++counter;
+			import.SetParentTable(this);
 			cells.Add(import);
 			return true;
 		}
@@ -83,6 +85,7 @@ namespace TablesLibrary.Interpreter
 		{
 			cells.Add(import);
 			counter = import.ID;
+			import.SetParentTable(this);
 			return true;
 		}
 
@@ -101,14 +104,19 @@ namespace TablesLibrary.Interpreter
 
 		public bool Remove(Te remove)
         {
-			return cells.Remove(remove);
+			bool removed = cells.Remove(remove);
+            if (removed)
+            {
+				remove.SetParentTable<Te>(null);
+            }
+			return removed;
         }
 
 		public void RemoveAll(Boolean restartCounter)
         {
 			while (cells.Count > 0)
 			{
-				cells.Remove(cells[0]);
+				Remove(cells[0]);
 			}
 			if (restartCounter) counter = 0;
 		}
@@ -117,18 +125,14 @@ namespace TablesLibrary.Interpreter
 		{
 			while (cells.Count > 0)
 			{
-				cells.Remove(cells[0]);
+				Remove(cells[0]);
 			}
 			counter = 0;
 		}
 
 		public void WipeAllInfo()
 		{
-			while (cells.Count > 0)
-			{
-				cells.Remove(cells[0]);
-			}
-			counter = 0;
+			RemoveAll();
 			id = 0;
 			name = "";
 		}
