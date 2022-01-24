@@ -12,7 +12,7 @@ namespace TablesLibrary.Interpreter
 {
 	public abstract class Cell : INotifyPropertyChanged
 	{
-		[Field("ID")]
+		[Field("id")]
 		private int id = 0;
 
 		public int ID
@@ -49,18 +49,17 @@ namespace TablesLibrary.Interpreter
         }
 
 		protected abstract void updateThisBody(Cell cell);
-		protected abstract void saveBody(StreamWriter streamWriter);
 		protected abstract void loadBody(Comand comand);
 
-		protected void saveBody(StreamWriter streamWriter, Cell defaultCell)
+		protected virtual void saveBody(StreamWriter streamWriter, Cell defaultCell)
 		{
 			Type thisType = this.GetType();
+			
 
 			FieldInfo[] thisFields = thisType.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 
 			String savename;
 			FieldAttribute fieldAttrib;
-			streamWriter.Write(FormatParam("id", ID, defaultCell.id, 2));
 			for (int i = 0; i < thisFields.Length; i++)
 			{
 				fieldAttrib = (FieldAttribute)thisFields[i].GetCustomAttribute(typeof(FieldAttribute));
@@ -86,22 +85,15 @@ namespace TablesLibrary.Interpreter
 			}
 		}
 
-		public void saveCell(StreamWriter streamWriter)
+		internal void saveCell(StreamWriter streamWriter, Cell defaultCell)
 		{
 			streamWriter.Write(formatMark(this.GetType(), 1));
 			streamWriter.Write(FormatParam("id", id, 0, 2));
-			this.saveBody(streamWriter);
-			streamWriter.Write(formatMark(this.GetType(), 1));
-		}
-
-		public void saveCell(StreamWriter streamWriter, Cell defaultCell)
-		{
-			streamWriter.Write(formatMark(this.GetType(), 1));
 			this.saveBody(streamWriter, defaultCell);
 			streamWriter.Write(formatMark(this.GetType(), 1));
 		}
 
-		public void loadCell(StreamReader streamReader, Comand comand)
+		internal void loadCell(StreamReader streamReader, Comand comand)
 		{
 			bool endReading = false;
 			String savename;
@@ -168,7 +160,7 @@ namespace TablesLibrary.Interpreter
 			return "<" + parametr + ": " + argument + ">\n";
 		}
 		
-		public static String formatMark(Type type, int countOfTabulations)
+		internal static String formatMark(Type type, int countOfTabulations)
 		{
 			String export = "";
 			for (int i = 0; i < countOfTabulations; i++)

@@ -67,11 +67,6 @@ namespace TablesLibraryTests.ACommonTest.Cells
             throw new NotImplementedException();
         }
 
-        protected override void saveBody(StreamWriter streamWriter)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void updateThisBody(Cell cell)
         {
             throw new NotImplementedException();

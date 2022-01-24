@@ -48,13 +48,6 @@ namespace TablesLibraryTests.ACommonTest.Cells
             throw new NotImplementedException();
         }
 
-        protected override void saveBody(StreamWriter streamWriter)
-        {
-            //streamWriter.Write(FormatParam("name", name, "", 2));
-            //streamWriter.Write(FormatParam("isSerialGenre", isSerial, false, 2));
-            throw new NotImplementedException();
-        }
-
         protected override void updateThisBody(Cell cell)
         {
             throw new NotImplementedException();

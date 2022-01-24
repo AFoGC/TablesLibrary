@@ -172,31 +172,13 @@ namespace TablesLibrary.Interpreter
 
 			TableCellAttribute attribute = (TableCellAttribute)Attribute.GetCustomAttribute(typeof(Te), typeof(TableCellAttribute));
 
-            if (attribute != null)
-            {
-				if (attribute.IsAutoSave)
-				{
-					foreach (Te cell in cells)
-					{
-						cell.saveCell(streamWriter, defaultCell);
-					}
-				}
-				else
-				{
-					foreach (Te cell in cells)
-					{
-						cell.saveCell(streamWriter);
-					}
-				}
+			Te defCell = new Te();
+
+			foreach (Te cell in cells)
+			{
+				cell.saveCell(streamWriter, defCell);
 			}
-            else
-            {
-				foreach (Te cell in cells)
-				{
-					cell.saveCell(streamWriter);
-				}
-			}
-			
+
 
 			streamWriter.WriteLine("<Table>");
 			streamWriter.WriteLine();
