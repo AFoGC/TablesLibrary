@@ -252,7 +252,7 @@ namespace TablesLibrary.Interpreter
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-			return (IEnumerator)GetEnumerator();
+			return GetEnumerator();
         }
 
 		private TableEnum<Te> GetEnumerator()
@@ -263,39 +263,14 @@ namespace TablesLibrary.Interpreter
 
     internal class TableEnum<T> : IEnumerator where T : Cell, new()
 	{
-		private List<T> list;
-		private int position = -1;
+		private IEnumerator enumerator;
 
         public TableEnum(List<T> table)
         {
-			this.list = table;
+			this.enumerator = table.GetEnumerator();
         }
-
-		object IEnumerator.Current
-		{
-			get
-			{
-				return Current;
-			}
-		}
-
-		public T Current
-		{
-			get
-			{
-				return list[position];
-			}
-		}
-
-		public bool MoveNext()
-        {
-			position++;
-			return (position < list.Count);
-        }
-
-        public void Reset()
-        {
-			position = -1;
-        }
+		public object Current => enumerator.Current;
+		public bool MoveNext() => enumerator.MoveNext();
+		public void Reset() => enumerator.Reset();
     }
 }

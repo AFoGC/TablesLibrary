@@ -250,50 +250,19 @@ namespace TablesLibrary.Interpreter
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-			return (IEnumerator)GetEnumerator();
-        }
-
-		private TabCollEnum GetEnumerator()
-        {
 			return new TabCollEnum(tables);
         }
 	}
 
     internal class TabCollEnum : IEnumerator
     {
-		List<BaseTable> tables = null;
-		int position = -1;
-
+		IEnumerator enumerator;
 		public TabCollEnum(List<BaseTable> tables)
         {
-			this.tables = tables;
+			enumerator = tables.GetEnumerator();
         }
-
-		object IEnumerator.Current
-		{
-			get
-			{
-				return Current;
-			}
-		}
-
-		public BaseTable Current
-		{
-			get
-			{
-				return tables[position];
-			}
-		}
-
-		public bool MoveNext()
-        {
-			position++;
-			return (position < tables.Count);
-        }
-
-        public void Reset()
-        {
-			position = -1;
-        }
+		public object Current => enumerator.Current;
+		public bool MoveNext() => enumerator.MoveNext();
+		public void Reset() => enumerator.Reset();
     }
 }
