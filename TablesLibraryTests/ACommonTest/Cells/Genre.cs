@@ -29,25 +29,6 @@ namespace TablesLibraryTests.ACommonTest.Cells
             set { isSerial = value; }
         }
 
-        protected override void loadBody(Comand comand)
-        {
-            /*
-            switch (comand.Paramert)
-            {
-                case "name":
-                    name = comand.Value;
-                    break;
-                case "isSerial":
-                    isSerial = Convert.ToBoolean(comand.Value);
-                    break;
-
-                default:
-                    break;
-            }
-            */
-            throw new NotImplementedException();
-        }
-
         protected override void updateThisBody(Cell cell)
         {
             throw new NotImplementedException();

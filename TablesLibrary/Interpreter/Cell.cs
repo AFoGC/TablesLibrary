@@ -34,22 +34,125 @@ namespace TablesLibrary.Interpreter
 		private BaseTable parentTable = null;
 
 		internal void SetParentTable<T>(Table<T> table) where T : Cell, new()
-        {
+		{
 			Table<T> pTable = (Table<T>)parentTable;
 			if (pTable != null)
-            {
+			{
 				table.Remove((T)this);
 			}
 			parentTable = table;
-        }
+		}
 
 		internal Table<T> GetParentTable<T>() where T : Cell, new()
-        {
+		{
 			return (Table<T>)parentTable;
-        }
+		}
 
 		protected abstract void updateThisBody(Cell cell);
-		protected abstract void loadBody(Comand comand);
+		protected virtual void loadBody(Comand comand)
+		{
+			Type thisType = this.GetType();
+			FieldInfo[] thisFields = thisType.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+			FieldAttribute fieldAttrib;
+
+			foreach (FieldInfo field in thisFields)
+			{
+				fieldAttrib = (FieldAttribute)field.GetCustomAttribute(typeof(FieldAttribute));
+				if (fieldAttrib != null)
+				{
+					if (fieldAttrib.FieldName == comand.Paramert)
+					{
+						setFieldValue(field, comand);
+					}
+				}
+			}
+		}
+
+		private void setFieldValue(FieldInfo field, Comand comand)
+		{
+			Type type = field.FieldType;
+
+			if (type == typeof(String))
+			{
+				field.SetValue(this, comand.Value);
+				return;
+			}
+			if (type == typeof(Char))
+			{
+				field.SetValue(this, Convert.ToChar(comand.Value));
+				return;
+			}
+			if (type == typeof(DateTime))
+			{
+				field.SetValue(this, Convert.ToDateTime(comand.Value));
+				return;
+			}
+			if (type == typeof(Boolean))
+			{
+				field.SetValue(this, Convert.ToBoolean(comand.Value));
+				return;
+			}
+
+
+			if (type == typeof(Single))
+			{
+				field.SetValue(this, Convert.ToSingle(comand.Value));
+				return;
+			}
+			if (type == typeof(Decimal))
+			{
+				field.SetValue(this, Convert.ToDecimal(comand.Value));
+				return;
+			}
+			if (type == typeof(Double))
+			{
+				field.SetValue(this, Convert.ToDouble(comand.Value));
+				return;
+			}
+
+
+			if (type == typeof(Int64))
+            {
+				field.SetValue(this, Convert.ToInt64(comand.Value));
+				return;
+            }
+			if (type == typeof(Int32))
+			{
+				field.SetValue(this, Convert.ToInt32(comand.Value));
+				return;
+			}
+			if (type == typeof(Int16))
+			{
+				field.SetValue(this, Convert.ToInt16(comand.Value));
+				return;
+			}
+			if (type == typeof(SByte))
+			{
+				field.SetValue(this, Convert.ToSByte(comand.Value));
+				return;
+			}
+			if (type == typeof(Byte))
+			{
+				field.SetValue(this, Convert.ToByte(comand.Value));
+				return;
+			}
+			if (type == typeof(UInt16))
+			{
+				field.SetValue(this, Convert.ToUInt16(comand.Value));
+				return;
+			}
+			if (type == typeof(UInt32))
+			{
+				field.SetValue(this, Convert.ToUInt32(comand.Value));
+				return;
+			}
+			if (type == typeof(UInt64))
+			{
+				field.SetValue(this, Convert.ToUInt64(comand.Value));
+				return;
+			}
+		}
+		
 
 		protected virtual void saveBody(StreamWriter streamWriter, Cell defaultCell)
 		{
@@ -114,11 +217,11 @@ namespace TablesLibrary.Interpreter
 
 					if (savename != comand.Paramert)
 					{
-                        if (comand.Paramert != "id")
-                        {
+						if (comand.Paramert != "id")
+						{
 							loadBody(comand);
 						}
-                        else
+						else
 						{
 							this.id = Convert.ToInt32(comand.Value);
 						}
@@ -131,14 +234,13 @@ namespace TablesLibrary.Interpreter
 			}
 		}
 
-
 		//--------------------------------------formatParam static methods------------------------------------------------
 
 		public static String FormatParam<T>(String variableName, T item, T defaultValue, int countOfTabulations)
 		{
 			String export;
-            if (!EqualityComparer<T>.Default.Equals(item, defaultValue))
-            {
+			if (!EqualityComparer<T>.Default.Equals(item, defaultValue))
+			{
 				export = FormatToString(item, defaultValue);
 				export = formatComand(variableName, export);
 
@@ -147,10 +249,10 @@ namespace TablesLibrary.Interpreter
 					export = "\t" + export;
 				}
 			}
-            else
-            {
+			else
+			{
 				export = "";
-            }
+			}
 
 			return export;
 		}

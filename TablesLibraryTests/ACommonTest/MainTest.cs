@@ -19,9 +19,9 @@ namespace TablesLibraryTests.ACommonTest
             MainInfo.TableCollection.TableLoad += TableCollection_TableLoad;
 			MainInfo.TableCollection.TableFilePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\Testy.fdbc";
 			MainInfo.TableCollection.FileEncoding = Encoding.UTF8;
-			Fill();
-			//MainInfo.TableCollection.LoadTables();
+			
 
+			MainInfo.TableCollection.LoadTables();
 			MainInfo.TableCollection.SaveTables();
 
 			Assert.IsTrue(true);

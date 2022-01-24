@@ -62,11 +62,6 @@ namespace TablesLibraryTests.ACommonTest.Cells
             set { watchDate = value; }
         }
 
-        protected override void loadBody(Comand comand)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void updateThisBody(Cell cell)
         {
             throw new NotImplementedException();
