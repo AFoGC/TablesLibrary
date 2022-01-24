@@ -36,7 +36,7 @@ namespace TablesLibrary.Interpreter
 		internal void SetParentTable<T>(Table<T> table) where T : Cell, new()
 		{
 			Table<T> pTable = (Table<T>)parentTable;
-			if (pTable != null)
+			if (pTable != null && table != null)
 			{
 				table.Remove((T)this);
 			}
