@@ -6,9 +6,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using TablesLibrary.Interpreter.Attributes;
+using TablesLibrary.Interpreter.Table;
 
-namespace TablesLibrary.Interpreter
+namespace TablesLibrary.Interpreter.TableCell
 {
 	public abstract class Cell : INotifyPropertyChanged
 	{

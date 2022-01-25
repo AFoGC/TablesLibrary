@@ -5,7 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TablesLibrary.Interpreter.Attributes;
+using TablesLibrary.Interpreter.Table;
+using TablesLibrary.Interpreter.TableCell;
 
 namespace TablesLibrary.Interpreter
 {

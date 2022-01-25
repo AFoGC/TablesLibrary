@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TablesLibrary.Interpreter.Attributes;
+using TablesLibrary.Interpreter.TableCell;
 
-namespace TablesLibrary.Interpreter
+namespace TablesLibrary.Interpreter.Table
 {
     public abstract class Table<Te> : BaseTable, IEnumerable where Te : Cell, new()
     {
@@ -261,7 +261,7 @@ namespace TablesLibrary.Interpreter
 		}
 	}
 
-    internal class TableEnum<T> : IEnumerator where T : Cell, new()
+    internal class TableEnum<T> : IEnumerator where T : TableCell.Cell, new()
 	{
 		private IEnumerator enumerator;
 

@@ -5,8 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TablesLibrary.Interpreter.TableCell;
 
-namespace TablesLibrary.Interpreter
+namespace TablesLibrary.Interpreter.Table
 {
     public abstract class BaseTable
 	{

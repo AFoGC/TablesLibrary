@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TablesLibrary.Interpreter.Attributes
+namespace TablesLibrary.Interpreter.TableCell
 {
     [AttributeUsage(AttributeTargets.Field)]
     public class FieldAttribute : Attribute

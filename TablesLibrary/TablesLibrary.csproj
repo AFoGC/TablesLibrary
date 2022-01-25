@@ -41,18 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interpreter\Attributes\ConnectionAttribute.cs" />
-    <Compile Include="Interpreter\Attributes\TableCellAttribute.cs" />
-    <Compile Include="Interpreter\Attributes\FieldAttribute.cs" />
-    <Compile Include="Interpreter\Attributes\TLCollection.cs" />
-    <Compile Include="Interpreter\BaseTable.cs" />
-    <Compile Include="Interpreter\Cell.cs" />
-    <Compile Include="Interpreter\Comand.cs" />
+    <Compile Include="Interpreter\TableCell\TableCellAttribute.cs" />
+    <Compile Include="Interpreter\TableCell\FieldAttribute.cs" />
+    <Compile Include="Interpreter\Table\BaseTable.cs" />
+    <Compile Include="Interpreter\TableCell\Cell.cs" />
+    <Compile Include="Interpreter\TableCell\Comand.cs" />
     <Compile Include="Interpreter\Events.cs" />
-    <Compile Include="Interpreter\TLCollection.cs" />
+    <Compile Include="Interpreter\TableCell\TLCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Interpreter\Table.cs" />
+    <Compile Include="Interpreter\Table\Table.cs" />
     <Compile Include="Interpreter\TableCollection.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
