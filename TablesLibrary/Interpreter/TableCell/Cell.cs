@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -62,97 +63,11 @@ namespace TablesLibrary.Interpreter.TableCell
 				{
 					if (fieldAttrib.FieldName == comand.Paramert)
 					{
-						setFieldValue(field, comand);
+						field.SetValue(this, Convert.ChangeType(comand.Value, field.FieldType));
 					}
 				}
 			}
 		}
-
-		private void setFieldValue(FieldInfo field, Comand comand)
-		{
-			Type type = field.FieldType;
-
-			if (type == typeof(String))
-			{
-				field.SetValue(this, comand.Value);
-				return;
-			}
-			if (type == typeof(Char))
-			{
-				field.SetValue(this, Convert.ToChar(comand.Value));
-				return;
-			}
-			if (type == typeof(DateTime))
-			{
-				field.SetValue(this, Convert.ToDateTime(comand.Value));
-				return;
-			}
-			if (type == typeof(Boolean))
-			{
-				field.SetValue(this, Convert.ToBoolean(comand.Value));
-				return;
-			}
-
-
-			if (type == typeof(Single))
-			{
-				field.SetValue(this, Convert.ToSingle(comand.Value));
-				return;
-			}
-			if (type == typeof(Decimal))
-			{
-				field.SetValue(this, Convert.ToDecimal(comand.Value));
-				return;
-			}
-			if (type == typeof(Double))
-			{
-				field.SetValue(this, Convert.ToDouble(comand.Value));
-				return;
-			}
-
-
-			if (type == typeof(Int64))
-            {
-				field.SetValue(this, Convert.ToInt64(comand.Value));
-				return;
-            }
-			if (type == typeof(Int32))
-			{
-				field.SetValue(this, Convert.ToInt32(comand.Value));
-				return;
-			}
-			if (type == typeof(Int16))
-			{
-				field.SetValue(this, Convert.ToInt16(comand.Value));
-				return;
-			}
-			if (type == typeof(SByte))
-			{
-				field.SetValue(this, Convert.ToSByte(comand.Value));
-				return;
-			}
-			if (type == typeof(Byte))
-			{
-				field.SetValue(this, Convert.ToByte(comand.Value));
-				return;
-			}
-			if (type == typeof(UInt16))
-			{
-				field.SetValue(this, Convert.ToUInt16(comand.Value));
-				return;
-			}
-			if (type == typeof(UInt32))
-			{
-				field.SetValue(this, Convert.ToUInt32(comand.Value));
-				return;
-			}
-			if (type == typeof(UInt64))
-			{
-				field.SetValue(this, Convert.ToUInt64(comand.Value));
-				return;
-			}
-		}
-		
 
 		protected virtual void saveBody(StreamWriter streamWriter, Cell defaultCell)
 		{
@@ -163,13 +78,13 @@ namespace TablesLibrary.Interpreter.TableCell
 
 			String savename;
 			FieldAttribute fieldAttrib;
-			for (int i = 0; i < thisFields.Length; i++)
-			{
-				fieldAttrib = (FieldAttribute)thisFields[i].GetCustomAttribute(typeof(FieldAttribute));
+            foreach (FieldInfo field in thisFields)
+            {
+				fieldAttrib = (FieldAttribute)field.GetCustomAttribute(typeof(FieldAttribute));
 				if (fieldAttrib != null)
 				{
 					savename = fieldAttrib.FieldName;
-					streamWriter.Write(FormatParam(savename, thisFields[i].GetValue(this), thisFields[i].GetValue(defaultCell), 2));
+					streamWriter.Write(FormatParam(savename, field.GetValue(this), field.GetValue(defaultCell), 2));
 				}
 			}
 		}
@@ -272,7 +187,7 @@ namespace TablesLibrary.Interpreter.TableCell
 			return export + "<" + type.Name + ">\n";
 		}
 		
-		public static String FormatToString<T>(T item, T defaultValue)
+		private static String FormatToString<T>(T item, T defaultValue)
 		{
 			if (EqualityComparer<T>.Default.Equals(item, defaultValue))
 			{

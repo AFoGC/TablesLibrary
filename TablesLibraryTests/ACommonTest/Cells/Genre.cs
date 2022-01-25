@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TablesLibrary.Interpreter;
-using TablesLibrary.Interpreter.Attributes;
+using TablesLibrary.Interpreter.TableCell;
 
 namespace TablesLibraryTests.ACommonTest.Cells
 {
