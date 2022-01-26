@@ -187,7 +187,7 @@ namespace TablesLibrary.Interpreter.TableCell
 			return export + "<" + type.Name + ">\n";
 		}
 		
-		private static String FormatToString<T>(T item, T defaultValue)
+		public static String FormatToString<T>(T item, T defaultValue)
 		{
 			if (EqualityComparer<T>.Default.Equals(item, defaultValue))
 			{
