@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -57,5 +58,5 @@ namespace TablesLibrary.Interpreter.Table
 		public abstract void LoadTable(StreamReader streamReader, Comand comand);
         public abstract void ConnectionsSubload(TableCollection tablesCollection);
         public abstract Type DataType { get; }
-	}
+    }
 }

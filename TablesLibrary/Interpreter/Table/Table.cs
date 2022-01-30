@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -64,28 +65,28 @@ namespace TablesLibrary.Interpreter.Table
             get { return cells.Count; }
         }
 
-		public bool AddElement()
+		public event PropertyChangedEventHandler CellPropertyChanged;
+		private void Import_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-			Te cell = (Te)Activator.CreateInstance(typeof(Te), ++counter);
-			cell.SetParentTable(this);
-			cells.Add(cell);
-
-			return true;
+			PropertyChangedEventHandler handler = CellPropertyChanged;
+			if (handler != null)
+				handler(sender, e);
 		}
 
 		public bool AddElement(Te import)
 		{
 			import.ID = ++counter;
 			import.SetParentTable(this);
+            import.PropertyChanged += Import_PropertyChanged;
 			cells.Add(import);
 			return true;
 		}
 
-		public bool AddWithoutReindexation(Te import)
+        public bool AddElement()
 		{
-			cells.Add(import);
-			counter = import.ID;
-			import.SetParentTable(this);
+			Te cell = new Te();
+			AddElement(cell);
+
 			return true;
 		}
 
@@ -109,7 +110,8 @@ namespace TablesLibrary.Interpreter.Table
             {
 				remove.ID = 0;
 				remove.SetParentTable<Te>(null);
-            }
+				remove.PropertyChanged -= Import_PropertyChanged;
+			}
 			return removed;
         }
 
