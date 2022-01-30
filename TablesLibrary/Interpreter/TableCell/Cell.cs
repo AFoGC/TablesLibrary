@@ -19,7 +19,7 @@ namespace TablesLibrary.Interpreter.TableCell
 		public int ID
 		{
 			get { return id; }
-			set { id = value; OnPropertyChanged(nameof(ID)); }
+			internal set { id = value; OnPropertyChanged(nameof(ID)); }
 		}
 
 		public Cell()

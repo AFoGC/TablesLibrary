@@ -107,6 +107,7 @@ namespace TablesLibrary.Interpreter.Table
 			bool removed = cells.Remove(remove);
             if (removed)
             {
+				remove.ID = 0;
 				remove.SetParentTable<Te>(null);
             }
 			return removed;
