@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TablesLibrary.Interpreter;
 using TablesLibrary.Interpreter.TableCell;
 
-namespace TablesLibraryTests.ACommonTest.Cells
+namespace TL_Objects
 {
     [TableCell("Film", true)]
     public class Film : Cell

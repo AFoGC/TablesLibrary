@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TablesLibrary.Interpreter;
-using TablesLibraryTests.ACommonTest.Cells;
+using TL_Objects;
 
 namespace TablesLibraryTests.ACommonTest
 {

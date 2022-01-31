@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using TablesLibrary.Interpreter;
 using TablesLibrary.Interpreter.Table;
-using TablesLibraryTests.ACommonTest.Cells;
+using TL_Objects;
 
-namespace TablesLibraryTests.ACommonTest.Tables
+namespace TL_Tables
 {
-    public class FilmsTable : Table<Film>
-    {
-        public override void ConnectionsSubload(TableCollection tablesCollection)
-        {
+	public class FilmsTable : Table<Film>
+	{
+		public override void ConnectionsSubload(TableCollection tablesCollection)
+		{
 			Table<Genre> genresTable = tablesCollection.GetTable<Genre>();
 			foreach (Film film in this)
 			{
@@ -33,5 +33,5 @@ namespace TablesLibraryTests.ACommonTest.Tables
 				}
 			}
 		}
-    }
+	}
 }

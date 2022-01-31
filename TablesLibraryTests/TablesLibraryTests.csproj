@@ -56,13 +56,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="ACommonTest\Cells\CellHelp\Source.cs" />
-    <Compile Include="ACommonTest\Cells\Film.cs" />
-    <Compile Include="ACommonTest\Cells\Genre.cs" />
     <Compile Include="ACommonTest\MainInfo.cs" />
     <Compile Include="ACommonTest\MainTest.cs" />
-    <Compile Include="ACommonTest\Tables\FilmsTable.cs" />
-    <Compile Include="ACommonTest\Tables\GenresTable.cs" />
     <Compile Include="Interpreter\CellTests.cs" />
     <Compile Include="Interpreter\TableCollectionTests.cs" />
     <Compile Include="Interpreter\TableTests.cs" />
@@ -75,6 +70,14 @@
     <ProjectReference Include="..\TablesLibrary\TablesLibrary.csproj">
       <Project>{6389A55E-2582-4996-B0F4-EAA7F1078A84}</Project>
       <Name>TablesLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TL_Objects\TL_Objects.csproj">
+      <Project>{483f1166-0d86-43bb-a995-47d754d3cb76}</Project>
+      <Name>TL_Objects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TL_Tables\TL_Tables.csproj">
+      <Project>{ea3c568a-ae56-48f0-84f0-69d7443aeae1}</Project>
+      <Name>TL_Tables</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

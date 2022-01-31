@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TablesLibrary.Interpreter;
 using TablesLibrary.Interpreter.Table;
-using TablesLibraryTests.ACommonTest.Cells;
+using TL_Objects;
 
-namespace TablesLibraryTests.ACommonTest.Tables
+namespace TL_Tables
 {
     public class GenresTable : Table<Genre>
     {
         public override void ConnectionsSubload(TableCollection tablesCollection)
         {
-            
+
         }
     }
 }

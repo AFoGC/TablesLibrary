@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TablesLibrary.Interpreter;
-using TablesLibraryTests.ACommonTest.Cells;
-using TablesLibraryTests.ACommonTest.Tables;
+using TL_Tables;
 
 namespace TablesLibraryTests.ACommonTest
 {
