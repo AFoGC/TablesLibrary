@@ -41,10 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoSaveCell.cs" />
     <Compile Include="CellHelp\Source.cs" />
     <Compile Include="Film.cs" />
     <Compile Include="Genre.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScriptSaveCell.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TablesLibrary\TablesLibrary.csproj">

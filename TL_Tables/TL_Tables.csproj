@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoTable.cs" />
     <Compile Include="FilmsTable.cs" />
     <Compile Include="GenresTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScriptTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TablesLibrary\TablesLibrary.csproj">

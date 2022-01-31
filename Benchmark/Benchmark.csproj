@@ -9,4 +9,10 @@
     <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TablesLibrary\TablesLibrary.csproj" />
+    <ProjectReference Include="..\TL_Objects\TL_Objects.csproj" />
+    <ProjectReference Include="..\TL_Tables\TL_Tables.csproj" />
+  </ItemGroup>
+
 </Project>
