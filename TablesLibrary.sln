@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TablesLibrary", "TablesLibr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TablesLibraryTests", "TablesLibraryTests\TablesLibraryTests.csproj", "{1520FA71-5A91-4788-B416-AB18A59B1802}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "Benchmark\Benchmark.csproj", "{EE482F97-F6E1-440C-A0FD-919696BFBC7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1520FA71-5A91-4788-B416-AB18A59B1802}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1520FA71-5A91-4788-B416-AB18A59B1802}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1520FA71-5A91-4788-B416-AB18A59B1802}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE482F97-F6E1-440C-A0FD-919696BFBC7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE482F97-F6E1-440C-A0FD-919696BFBC7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE482F97-F6E1-440C-A0FD-919696BFBC7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE482F97-F6E1-440C-A0FD-919696BFBC7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
