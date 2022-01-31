@@ -8,6 +8,10 @@ namespace Benchmark
         static void Main(string[] args)
         {
             BenchmarkRunner.Run<CellAuto>();
+            //CellAuto auto = new CellAuto();
+            //auto.AutoTableBenchmark();
+            //auto.ScriptTableBenchmark();
+            //auto.StaticScriptTableBenchmark();
         }
     }
 }

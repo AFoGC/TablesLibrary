@@ -9,7 +9,7 @@ using TablesLibrary.Interpreter.TableCell;
 namespace TL_Objects
 {
     [TableCell("Film")]
-    public class ScriptSaveCell : Cell
+    public class StaticScriptSaveCell : Cell
     {
         [Field("Name")]
         private String name;
@@ -47,10 +47,10 @@ namespace TL_Objects
 
         protected override void saveBody(StreamWriter streamWriter, Cell defaultCell)
         {
-            streamWriter.Write(FormatParam("Name", name, "", 2));
-            streamWriter.Write(FormatParam("RealiseYear", realiseYear, 0, 2));
-            streamWriter.Write(FormatParam("Watched", watched, false, 2));
-            streamWriter.Write(FormatParam("WatchDate", watchDate, new DateTime(), 2));
+            streamWriter.Write(FormatParam(nameName, name, nameDefVal, 2));
+            streamWriter.Write(FormatParam(realiseYearName, realiseYear, realiseYearDefVal, 2));
+            streamWriter.Write(FormatParam(watchedName, watched, watchedDefVal, 2));
+            streamWriter.Write(FormatParam(watchDateName, watchDate, watchDateDefVal, 2));
         }
 
         protected override void loadBody(Comand comand)
@@ -79,5 +79,28 @@ namespace TL_Objects
         {
             throw new NotImplementedException();
         }
+
+        static StaticScriptSaveCell()
+        {
+            nameName = "Name";
+            realiseYearName = "RealiseYear";
+            watchedName = "Watched";
+            watchDateName = "WatchDate";
+
+            nameDefVal = "";
+            realiseYearDefVal = 0;
+            watchedDefVal = false;
+            watchDateDefVal = new DateTime();
+        }
+
+        private static readonly string nameName;
+        private static readonly string realiseYearName;
+        private static readonly string watchedName;
+        private static readonly string watchDateName;
+
+        private static readonly string nameDefVal;
+        private static readonly int realiseYearDefVal;
+        private static readonly bool watchedDefVal;
+        private static readonly DateTime watchDateDefVal;
     }
 }
