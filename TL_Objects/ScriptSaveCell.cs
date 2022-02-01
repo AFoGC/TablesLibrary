@@ -8,6 +8,7 @@ using TablesLibrary.Interpreter.TableCell;
 
 namespace TL_Objects
 {
+    [Serializable]
     [TableCell("Film")]
     public class ScriptSaveCell : Cell
     {

@@ -12,6 +12,8 @@ namespace Benchmark
             //auto.AutoTableBenchmark();
             //auto.ScriptTableBenchmark();
             //auto.StaticScriptTableBenchmark();
+            //auto.XMLserializationtable();
+            //Console.WriteLine("FFF");
         }
     }
 }
