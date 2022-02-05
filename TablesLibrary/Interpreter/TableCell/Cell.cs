@@ -32,6 +32,8 @@ namespace TablesLibrary.Interpreter.TableCell
 			this.id = id;
 		}
 
+		public event EventHandler CellRemoved;
+
 		private BaseTable parentTable = null;
 
 		internal void SetParentTable<T>(Table<T> table) where T : Cell, new()

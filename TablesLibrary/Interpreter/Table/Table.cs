@@ -13,6 +13,7 @@ namespace TablesLibrary.Interpreter.Table
     public abstract class Table<Te> : BaseTable, IEnumerable where Te : Cell, new()
     {
 		protected List<Te> cells = new List<Te>();
+		public event EventHandler CellRemoved;
 
 		private Te defaultCell = new Te();
 		public Te DefaultCell
@@ -111,6 +112,8 @@ namespace TablesLibrary.Interpreter.Table
 				remove.ID = 0;
 				remove.SetParentTable<Te>(null);
 				remove.PropertyChanged -= Import_PropertyChanged;
+				EventHandler handler = CellRemoved;
+				if (null != handler) handler(this, new RemoveCellTableEventArgs { RemovedCell = remove});
 			}
 			return removed;
         }

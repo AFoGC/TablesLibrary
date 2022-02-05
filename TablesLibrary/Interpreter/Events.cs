@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 namespace TablesLibrary.Interpreter
 {
     public delegate void TLCollectionEventHandler(object sender, EventArgs e);
-    public delegate void TableEventHandler(object sender, EventArgs e);
+    //public delegate void TableEventHandler(object sender, EventArgs e);
 }

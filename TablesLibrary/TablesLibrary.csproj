@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interpreter\TableCell\CellEvents.cs" />
     <Compile Include="Interpreter\TableCell\TableCellAttribute.cs" />
     <Compile Include="Interpreter\TableCell\FieldAttribute.cs" />
     <Compile Include="Interpreter\Table\BaseTable.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="Interpreter\TableCell\Comand.cs" />
     <Compile Include="Interpreter\Events.cs" />
     <Compile Include="Interpreter\TableCell\TLCollection.cs" />
+    <Compile Include="Interpreter\Table\TableEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interpreter\Table\Table.cs" />
     <Compile Include="Interpreter\TableCollection.cs" />
