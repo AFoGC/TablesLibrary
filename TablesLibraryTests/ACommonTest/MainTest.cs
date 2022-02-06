@@ -22,9 +22,11 @@ namespace TablesLibraryTests.ACommonTest
 
 			//Fill();
 			MainInfo.TableCollection.LoadTables();
+			MainInfo.TableCollection.TableFilePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\OutTesty.fdbc";
+			
 			MainInfo.TableCollection.SaveTables();
 
-			Assert.IsTrue(true);
+			Assert.AreEqual(File.ReadAllText("Testy.fdbc"), File.ReadAllText("OutTesty.fdbc"));
 		}
 
         private void TableCollection_TableLoad(object sender, EventArgs e)

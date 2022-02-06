@@ -36,12 +36,22 @@ namespace TablesLibrary.Interpreter.TableCell
 
 		private BaseTable parentTable = null;
 
+		internal void ActivateCellRemoved()
+        {
+			EventHandler handler = CellRemoved;
+			if (null != handler) handler(this, EventArgs.Empty);
+		}
+
 		internal void SetParentTable<T>(Table<T> table) where T : Cell, new()
 		{
 			Table<T> pTable = (Table<T>)parentTable;
-			if (pTable != null && table != null)
+			if (pTable != null)
 			{
-				table.Remove((T)this);
+				pTable.Remove((T)this);
+			}
+            if (table != null)
+            {
+				
 			}
 			parentTable = table;
 		}
