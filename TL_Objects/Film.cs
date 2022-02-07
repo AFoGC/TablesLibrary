@@ -25,40 +25,12 @@ namespace TL_Objects
         [Field("WatchDate")]
         private DateTime watchDate;
 
-        public String Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
-
-        public Genre Genre
-        {
-            get { return genre; }
-            set { genre = value; genreId = genre.ID; }
-        }
-
-        public Int32 GenreId
-        {
-            get { return genreId; }
-        }
-
-        public Int32 RealiseYear
-        {
-            get { return realiseYear; }
-            set { realiseYear = value; }
-        }
-
-        public Boolean Watched
-        {
-            get { return wathced; }
-            set { wathced = value; }
-        }
-
-        public DateTime WatchDate
-        {
-            get { return watchDate; }
-            set { watchDate = value; }
-        }
+        public String Name { get { return name; } set { name = value; } }
+        public Genre Genre { get { return genre; } set { genre = value; genreId = genre.ID; } }
+        public Int32 GenreId { get { return genreId; } }
+        public Int32 RealiseYear { get { return realiseYear; } set { realiseYear = value; } }
+        public Boolean Watched { get { return wathced; } set { wathced = value; } }
+        public DateTime WatchDate { get { return watchDate; } set { watchDate = value; } }
 
         protected override void updateThisBody(Cell cell)
         {
