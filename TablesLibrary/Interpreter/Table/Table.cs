@@ -177,7 +177,7 @@ namespace TablesLibrary.Interpreter.Table
 			streamWriter.Write(Cell.FormatParam(nameof(id), id, 0, 1));
 			streamWriter.Write(Cell.FormatParam(nameof(name), name, "", 1));
 
-			TableCellAttribute attribute = (TableCellAttribute)Attribute.GetCustomAttribute(typeof(Te), typeof(TableCellAttribute));
+			//TableCellAttribute attribute = (TableCellAttribute)Attribute.GetCustomAttribute(typeof(Te), typeof(TableCellAttribute));
 
 			Te defCell = new Te();
 
