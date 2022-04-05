@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TL_Tables;
 
 namespace TablesLibrary.Interpreter.Tests
 {
@@ -15,6 +16,27 @@ namespace TablesLibrary.Interpreter.Tests
         public void AddTableTest()
         {
             
+        }
+
+        [TestMethod()]
+        public void GetTableCollectionFromTalbe()
+        {
+            FilmsTable filmsTable = new FilmsTable();
+            TableCollection tableCollection = new TableCollection();
+            tableCollection.AddTable(filmsTable);
+            Assert.AreEqual(tableCollection, filmsTable.TableCollection);
+            Assert.IsTrue(tableCollection == filmsTable.TableCollection);
+        }
+
+        [TestMethod()]
+        public void RemoveTableFrom()
+        {
+            FilmsTable filmsTable = new FilmsTable();
+            TableCollection tableCollection = new TableCollection();
+            tableCollection.AddTable(filmsTable);
+            Assert.AreEqual(tableCollection, filmsTable.TableCollection);
+            tableCollection.RemoveTable(filmsTable);
+            Assert.IsNull(filmsTable.TableCollection);
         }
     }
 }

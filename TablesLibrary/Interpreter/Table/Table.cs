@@ -39,17 +39,21 @@ namespace TablesLibrary.Interpreter.Table
 
 		public Table()
         {
-
+            CellPropertyChanged += Table_CellPropertyChanged;
         }
 
-		public Table(int id)
+        private void Table_CellPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+			TableCollection.TableChanged();
+		}
+
+        public Table(int id) : this()
 		{
 			this.id = id;
 		}
 
-		public Table(int id, String name)
+		public Table(int id, String name) : this(id)
 		{
-			this.id = id;
 			this.name = name;
 		}
 
@@ -73,6 +77,7 @@ namespace TablesLibrary.Interpreter.Table
 			if (handler != null)
 				handler(sender, e);
 		}
+
 
 		public bool AddElement(Te import)
 		{

@@ -18,6 +18,7 @@ namespace TablesLibrary.Interpreter
 
 		public event EventHandler TableLoad;
 		public event EventHandler TableSave;
+		public event EventHandler CellInTablesChanged;
 		public Encoding FileEncoding { get; set; }
 
 		public TableCollection()
@@ -25,10 +26,16 @@ namespace TablesLibrary.Interpreter
 			FileEncoding = Encoding.Default;
 		}
 
-		public TableCollection(String tableFilePath)
+        public TableCollection(String tableFilePath) : this()
 		{
 			this.tableFilePath = tableFilePath;
-			FileEncoding = Encoding.Default;
+		}
+
+		internal void TableChanged()
+        {
+			EventHandler handler = CellInTablesChanged;
+			if (handler != null)
+				handler(this, EventArgs.Empty);
 		}
 
 		/// <summary> 
