@@ -13,7 +13,7 @@ namespace TablesLibrary.Interpreter.Table
     public abstract class Table<Te> : BaseTable, IEnumerable where Te : Cell, new()
     {
 		protected List<Te> cells = new List<Te>();
-		//public event EventHandler CellRemoved;
+		public event EventHandler CollectionChanged;
 
 		private Te defaultCell = new Te();
 		public Te DefaultCell
@@ -85,6 +85,7 @@ namespace TablesLibrary.Interpreter.Table
 			import.SetParentTable(this);
             import.PropertyChanged += Import_PropertyChanged;
 			cells.Add(import);
+			OnCollectionChanged();
 			return true;
 		}
 
@@ -118,8 +119,7 @@ namespace TablesLibrary.Interpreter.Table
 				remove.SetParentTable<Te>(null);
 				remove.PropertyChanged -= Import_PropertyChanged;
 				remove.ActivateCellRemoved();
-				//EventHandler handler = CellRemoved;
-				//if (null != handler) handler(this, new RemoveCellTableEventArgs { RemovedCell = remove});
+				OnCollectionChanged();
 			}
 			return removed;
         }
@@ -174,6 +174,12 @@ namespace TablesLibrary.Interpreter.Table
 					return DefaultCell;
                 }
 			}
+		}
+
+		private void OnCollectionChanged()
+        {
+			EventHandler handler = CollectionChanged;
+			if (null != handler) handler(this, EventArgs.Empty);
 		}
 
 		public override void SaveTable(StreamWriter streamWriter)
