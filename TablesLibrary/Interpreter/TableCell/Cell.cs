@@ -33,33 +33,13 @@ namespace TablesLibrary.Interpreter.TableCell
 		}
 
 		public event EventHandler CellRemoved;
-
-		private BaseTable parentTable = null;
-
 		internal void ActivateCellRemoved()
         {
 			EventHandler handler = CellRemoved;
 			if (null != handler) handler(this, EventArgs.Empty);
 		}
 
-		internal void SetParentTable<T>(Table<T> table) where T : Cell, new()
-		{
-			Table<T> pTable = (Table<T>)parentTable;
-			if (pTable != null)
-			{
-				pTable.Remove((T)this);
-			}
-            if (table != null)
-            {
-				
-			}
-			parentTable = table;
-		}
-
-		internal Table<T> GetParentTable<T>() where T : Cell, new()
-		{
-			return (Table<T>)parentTable;
-		}
+		public BaseTable ParentTable { get; internal set; }
 
 		protected abstract void updateThisBody(Cell cell);
 		protected virtual void loadBody(Comand comand)
@@ -216,6 +196,11 @@ namespace TablesLibrary.Interpreter.TableCell
 			PropertyChangedEventHandler handler = PropertyChanged;
 			if (handler != null)
 				handler(this, e);
+            if (this.ParentTable != null)
+            {
+				this.ParentTable.InCollectionChanged();
+			}
+			
 		}
 
 		protected void OnPropertyChanged(string propertyName)

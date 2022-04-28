@@ -53,7 +53,13 @@ namespace TablesLibrary.Interpreter.Table
                 tableCollection = value;
             }
         }
-		public abstract void SaveTable(StreamWriter streamWriter);
+
+        internal void InCollectionChanged()
+        {
+            TableCollection.TableChanged();
+        }
+
+        public abstract void SaveTable(StreamWriter streamWriter);
 		public abstract void LoadTable(StreamReader streamReader, Comand comand);
         public abstract void ConnectionsSubload(TableCollection tablesCollection);
         public abstract Type DataType { get; }

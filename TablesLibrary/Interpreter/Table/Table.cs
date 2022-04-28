@@ -39,7 +39,7 @@ namespace TablesLibrary.Interpreter.Table
 
 		public Table()
         {
-            CellPropertyChanged += Table_CellPropertyChanged;
+            
         }
 
         private void Table_CellPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -70,20 +70,11 @@ namespace TablesLibrary.Interpreter.Table
             get { return cells.Count; }
         }
 
-		public event PropertyChangedEventHandler CellPropertyChanged;
-		private void Import_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-		{
-			PropertyChangedEventHandler handler = CellPropertyChanged;
-			if (handler != null)
-				handler(sender, e);
-		}
-
 
 		public bool AddElement(Te import)
 		{
 			import.ID = ++counter;
-			import.SetParentTable(this);
-            import.PropertyChanged += Import_PropertyChanged;
+			import.ParentTable = this;
 			cells.Add(import);
 			OnCollectionChanged();
 			return true;
@@ -116,8 +107,7 @@ namespace TablesLibrary.Interpreter.Table
             if (removed)
             {
 				remove.ID = 0;
-				remove.SetParentTable<Te>(null);
-				remove.PropertyChanged -= Import_PropertyChanged;
+				remove.ParentTable = null;
 				remove.ActivateCellRemoved();
 				OnCollectionChanged();
 			}
@@ -219,7 +209,7 @@ namespace TablesLibrary.Interpreter.Table
 					{
 						Te cell = new Te();
 						cell.loadCell(streamReader, comand);
-						cells.Add(cell);
+						this.AddElement(cell);
 					}
 					else
 					{
