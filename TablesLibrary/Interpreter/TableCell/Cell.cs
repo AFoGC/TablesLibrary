@@ -203,7 +203,7 @@ namespace TablesLibrary.Interpreter.TableCell
 			
 		}
 
-		protected void OnPropertyChanged(string propertyName)
+		public void OnPropertyChanged(string propertyName)
 		{
 			OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
 		}
