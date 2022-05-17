@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ using TablesLibrary.Interpreter.TableCell;
 
 namespace TablesLibrary.Interpreter
 {
-	public class TableCollection : IEnumerable
+	public class TableCollection : IEnumerable, INotifyCollectionChanged
 	{
 		private List<BaseTable> tables = new List<BaseTable>();
 		private int counter = 0;
@@ -19,7 +20,9 @@ namespace TablesLibrary.Interpreter
 		public event EventHandler TableLoad;
 		public event EventHandler TableSave;
 		public event EventHandler CellInTablesChanged;
-		public Encoding FileEncoding { get; set; }
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+
+        public Encoding FileEncoding { get; set; }
 
 		public TableCollection()
 		{
@@ -196,6 +199,14 @@ namespace TablesLibrary.Interpreter
 			}
 		}
 
+		internal void OnCollcetionChanged(NotifyCollectionChangedAction action)
+        {
+			var args = new NotifyCollectionChangedEventArgs(action);
+			NotifyCollectionChangedEventHandler handler = CollectionChanged;
+			if (handler != null)
+				handler(this, args);
+		}
+
 		public void AddTable(Type type)
 		{
 			Type genericTableType = typeof(Table<>).MakeGenericType(type);
@@ -203,6 +214,7 @@ namespace TablesLibrary.Interpreter
 
 			baseTable.TableCollection = this;
 			tables.Add(baseTable);
+			OnCollcetionChanged(NotifyCollectionChangedAction.Add);
 		}
 
 		public void AddTable<T>(Table<T> import) where T : Cell, new()
@@ -211,6 +223,7 @@ namespace TablesLibrary.Interpreter
 			import.ID = ++counter;
 
 			tables.Add(import);
+			OnCollcetionChanged(NotifyCollectionChangedAction.Add);
 		}
 
 		public void RemoveAllTables(Boolean restartCounter)
@@ -225,7 +238,11 @@ namespace TablesLibrary.Interpreter
 		public bool RemoveTable(BaseTable table)
 		{
 			bool removed = tables.Remove(table);
-			table.TableCollection = null;
+            if (removed)
+            {
+				table.TableCollection = null;
+				OnCollcetionChanged(NotifyCollectionChangedAction.Remove);
+			}
 			return removed;
 		}
 

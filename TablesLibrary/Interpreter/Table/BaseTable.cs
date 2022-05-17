@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -10,12 +11,12 @@ using TablesLibrary.Interpreter.TableCell;
 
 namespace TablesLibrary.Interpreter.Table
 {
-    public abstract class BaseTable
+    public abstract class BaseTable : INotifyCollectionChanged
 	{
         protected int id = 0;
         protected String name = "";
 
-		public int ID
+        public int ID
 		{
 			get { return id; }
             set
@@ -38,6 +39,7 @@ namespace TablesLibrary.Interpreter.Table
 		}
 
         private TableCollection tableCollection;
+
         public TableCollection TableCollection
         {
             get
@@ -52,6 +54,15 @@ namespace TablesLibrary.Interpreter.Table
                 }
                 tableCollection = value;
             }
+        }
+
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+
+        internal void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+        {
+            NotifyCollectionChangedEventHandler handler = CollectionChanged;
+            if (handler != null)
+                handler(this, e);
         }
 
         internal void InCollectionChanged()

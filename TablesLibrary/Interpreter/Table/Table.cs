@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -13,7 +14,6 @@ namespace TablesLibrary.Interpreter.Table
     public abstract class Table<Te> : BaseTable, IEnumerable where Te : Cell, new()
     {
 		protected List<Te> cells = new List<Te>();
-		public event EventHandler CollectionChanged;
 
 		private Te defaultCell = new Te();
 		public Te DefaultCell
@@ -76,7 +76,10 @@ namespace TablesLibrary.Interpreter.Table
 			import.ID = ++counter;
 			import.ParentTable = this;
 			cells.Add(import);
-			OnCollectionChanged();
+
+			var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add);
+			
+			OnCollectionChanged(args);
 			return true;
 		}
 
@@ -109,7 +112,10 @@ namespace TablesLibrary.Interpreter.Table
 				remove.ID = 0;
 				remove.ParentTable = null;
 				remove.ActivateCellRemoved();
-				OnCollectionChanged();
+
+				var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove);
+
+				OnCollectionChanged(args);
 			}
 			return removed;
         }
@@ -164,12 +170,6 @@ namespace TablesLibrary.Interpreter.Table
 					return DefaultCell;
                 }
 			}
-		}
-
-		private void OnCollectionChanged()
-        {
-			EventHandler handler = CollectionChanged;
-			if (null != handler) handler(this, EventArgs.Empty);
 		}
 
 		public override void SaveTable(StreamWriter streamWriter)
