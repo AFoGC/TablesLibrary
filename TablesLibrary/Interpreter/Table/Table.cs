@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
@@ -13,7 +14,7 @@ namespace TablesLibrary.Interpreter.Table
 {
     public abstract class Table<Te> : BaseTable, IEnumerable where Te : Cell, new()
     {
-		protected List<Te> cells = new List<Te>();
+		protected ObservableCollection<Te> cells = new ObservableCollection<Te>();
 
 		private Te defaultCell = new Te();
 		public Te DefaultCell
@@ -37,15 +38,20 @@ namespace TablesLibrary.Interpreter.Table
 			return cells.ToArray();
 		}
 
-		public Table()
-        {
-            
-        }
-
         private void Table_CellPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
 			TableCollection.TableChanged();
 		}
+
+		public Table()
+		{
+            cells.CollectionChanged += Cells_CollectionChanged;
+		}
+
+        private void Cells_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+			OnCollectionChanged(e);
+        }
 
         public Table(int id) : this()
 		{
@@ -77,9 +83,6 @@ namespace TablesLibrary.Interpreter.Table
 			import.ParentTable = this;
 			cells.Add(import);
 
-			var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add);
-			
-			OnCollectionChanged(args);
 			return true;
 		}
 
@@ -112,10 +115,6 @@ namespace TablesLibrary.Interpreter.Table
 				remove.ID = 0;
 				remove.ParentTable = null;
 				remove.ActivateCellRemoved();
-
-				var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove);
-
-				OnCollectionChanged(args);
 			}
 			return removed;
         }
@@ -273,7 +272,7 @@ namespace TablesLibrary.Interpreter.Table
 	{
 		private IEnumerator enumerator;
 
-        public TableEnum(List<T> table)
+        public TableEnum(ObservableCollection<T> table)
         {
 			this.enumerator = table.GetEnumerator();
         }
