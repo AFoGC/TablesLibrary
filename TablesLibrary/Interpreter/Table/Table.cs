@@ -112,6 +112,8 @@ namespace TablesLibrary.Interpreter.Table
 			bool removed = cells.Remove(remove);
             if (removed)
             {
+				if (counter == remove.ID)
+					counter = this.GetLastElement.ID;
 				remove.ID = 0;
 				remove.ParentTable = null;
 				remove.ActivateCellRemoved();
