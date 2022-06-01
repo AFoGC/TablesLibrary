@@ -73,6 +73,7 @@ namespace TablesLibrary.Interpreter.Table
         public abstract void SaveTable(StreamWriter streamWriter);
 		public abstract void LoadTable(StreamReader streamReader, Comand comand);
         public abstract void ConnectionsSubload(TableCollection tablesCollection);
+        public virtual void PresaveChages(TableCollection tablesCollection) { }
         public abstract Type DataType { get; }
     }
 }

@@ -31,8 +31,6 @@ namespace TablesLibrary.Interpreter.Table
 
 		public override Type DataType => typeof(Te);
 
-		public abstract override void ConnectionsSubload(TableCollection tablesCollection);
-
 		public Te[] ToArray()
 		{
 			return cells.ToArray();

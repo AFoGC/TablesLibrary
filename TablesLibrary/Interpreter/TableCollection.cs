@@ -17,7 +17,9 @@ namespace TablesLibrary.Interpreter
 		private int counter = 0;
 		private String tableFilePath = null;
 
+		public event EventHandler TableLoading;
 		public event EventHandler TableLoad;
+		public event EventHandler TableSaving;
 		public event EventHandler TableSave;
 		public event EventHandler CellInTablesChanged;
 
@@ -51,6 +53,14 @@ namespace TablesLibrary.Interpreter
             }
         }
 
+		public void PresaveChanges()
+        {
+			foreach (BaseTable table in tables)
+			{
+				table.PresaveChages(this);
+			}
+		}
+
 		public String TableFilePath
 		{
 			get { return tableFilePath; }
@@ -69,6 +79,9 @@ namespace TablesLibrary.Interpreter
 		/// <returns></returns>
 		public bool LoadTables()
 		{
+			EventHandler handler1 = TableLoading;
+			if (null != handler1) handler1(this, EventArgs.Empty);
+
 			bool export;
 			using (StreamReader sr = new StreamReader(tableFilePath, FileEncoding))
 			{
@@ -140,6 +153,11 @@ namespace TablesLibrary.Interpreter
 		/// </summary>
 		public void SaveTables()
 		{
+			PresaveChanges();
+
+			EventHandler handler1 = TableSaving;
+			if (null != handler1) handler1(this, EventArgs.Empty);
+
 			using (StreamWriter sw = new StreamWriter(tableFilePath, false, FileEncoding))
 			{
 				sw.WriteLine("<DocStart>");
@@ -152,8 +170,8 @@ namespace TablesLibrary.Interpreter
 				sw.WriteLine("<DocEnd>");
 			}
 
-			EventHandler handler = TableSave;
-			if (null != handler) handler(this, EventArgs.Empty);
+			EventHandler handler2 = TableSave;
+			if (null != handler2) handler2(this, EventArgs.Empty);
 		}
 
 		public BaseTable this[Type type]
