@@ -41,17 +41,17 @@ namespace TablesLibrary.Interpreter.Table
 			TableCollection.TableChanged();
 		}
 
-		public Table()
-		{
-            cells.CollectionChanged += Cells_CollectionChanged;
-		}
-
         private void Cells_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
 			OnCollectionChanged(e);
         }
 
-        public Table(int id) : this()
+		public Table()
+		{
+			cells.CollectionChanged += Cells_CollectionChanged;
+		}
+
+		public Table(int id) : this()
 		{
 			this.id = id;
 		}
@@ -119,21 +119,17 @@ namespace TablesLibrary.Interpreter.Table
 			return removed;
         }
 
-		public void RemoveAll(Boolean restartCounter)
-        {
-			while (cells.Count > 0)
-			{
-				Remove(cells[0]);
-			}
-			if (restartCounter) counter = 0;
-		}
-
 		public void RemoveAll()
 		{
-			while (cells.Count > 0)
-			{
-				Remove(cells[0]);
-			}
+            foreach (Te cell in cells)
+            {
+				cell.ID = 0;
+				cell.ParentTable = null;
+				cell.ActivateCellRemoved();
+            }
+
+			cells.Clear();
+
 			counter = 0;
 		}
 
