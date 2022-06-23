@@ -195,6 +195,8 @@ namespace TablesLibrary.Interpreter.Table
 			TableCellAttribute attribute = (TableCellAttribute)Attribute.GetCustomAttribute(typeof(Te), typeof(TableCellAttribute));
 			String dataName = attribute.DataSaveName;
 
+			cells.CollectionChanged -= Cells_CollectionChanged;
+
 			while (endReading == false)
 			{
 				comand.getComand(streamReader.ReadLine());
@@ -230,6 +232,8 @@ namespace TablesLibrary.Interpreter.Table
 			{
 				counter = cells[cells.Count - 1].ID;
 			}
+
+			cells.CollectionChanged += Cells_CollectionChanged;
 		}
 
 		private String tableDeclaration(int countOfTabulations)
