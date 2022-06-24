@@ -39,7 +39,7 @@ namespace TablesLibrary.Interpreter.TableCell
 			if (null != handler) handler(this, EventArgs.Empty);
 		}
 
-		public BaseTable ParentTable { get; internal set; }
+		public ITable ParentTable { get; internal set; }
 
 		protected abstract void updateThisBody(Cell cell);
 		protected virtual void loadBody(Comand comand)
@@ -198,7 +198,7 @@ namespace TablesLibrary.Interpreter.TableCell
 				handler(this, e);
             if (this.ParentTable != null)
             {
-				this.ParentTable.InCollectionChanged();
+				((BaseTable)ParentTable).InCollectionChanged();
 			}
 			
 		}
