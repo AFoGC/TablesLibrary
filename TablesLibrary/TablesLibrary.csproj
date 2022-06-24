@@ -49,6 +49,7 @@
     <Compile Include="Interpreter\TableCell\Comand.cs" />
     <Compile Include="Interpreter\Events.cs" />
     <Compile Include="Interpreter\TableCell\TLCollection.cs" />
+    <Compile Include="Interpreter\Table\IBaseTable.cs" />
     <Compile Include="Interpreter\Table\TableEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interpreter\Table\Table.cs" />
