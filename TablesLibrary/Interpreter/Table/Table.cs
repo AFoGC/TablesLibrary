@@ -12,15 +12,15 @@ using TablesLibrary.Interpreter.TableCell;
 
 namespace TablesLibrary.Interpreter.Table
 {
-    public abstract class Table<Te> : BaseTable, IEnumerable where Te : Cell, new()
-    {
+	public abstract class Table<Te> : BaseTable, IEnumerable, ITable where Te : Cell, new()
+	{
 		protected ObservableCollection<Te> cells = new ObservableCollection<Te>();
 
 		private Te defaultCell = new Te();
 		public Te DefaultCell
-        {
-            get { return defaultCell; }
-        }
+		{
+			get { return defaultCell; }
+		}
 
 		private int counter = 0;
 
@@ -36,15 +36,15 @@ namespace TablesLibrary.Interpreter.Table
 			return cells.ToArray();
 		}
 
-        private void Table_CellPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
+		private void Table_CellPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
 			TableCollection.TableChanged();
 		}
 
-        private void Cells_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
+		private void Cells_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
 			OnCollectionChanged(e);
-        }
+		}
 
 		public Table()
 		{
@@ -62,17 +62,17 @@ namespace TablesLibrary.Interpreter.Table
 		}
 
 		public Te this[int index]
-        {
-            get
-            {
+		{
+			get
+			{
 				return cells[index];
-            }
-        }
+			}
+		}
 
 		public int Count
-        {
-            get { return cells.Count; }
-        }
+		{
+			get { return cells.Count; }
+		}
 
 
 		public bool AddElement(Te import)
@@ -84,7 +84,16 @@ namespace TablesLibrary.Interpreter.Table
 			return true;
 		}
 
-        public bool AddElement()
+		bool ITable.AddElement(Cell cell)
+		{
+			if (cell.GetType() == typeof(Te))
+			{
+				return AddElement((Te)cell);
+			}
+			else return false;
+		}
+
+		public bool AddElement()
 		{
 			Te cell = new Te();
 			AddElement(cell);
@@ -106,10 +115,10 @@ namespace TablesLibrary.Interpreter.Table
 		}
 
 		public bool Remove(Te remove)
-        {
+		{
 			bool removed = cells.Remove(remove);
-            if (removed)
-            {
+			if (removed)
+			{
 				if (counter == remove.ID)
 					counter = this.GetLastElement.ID;
 				remove.ID = 0;
@@ -117,16 +126,25 @@ namespace TablesLibrary.Interpreter.Table
 				remove.ActivateCellRemoved();
 			}
 			return removed;
-        }
+		}
+
+		bool ITable.Remove(Cell remove)
+		{
+			if (remove.GetType() == typeof(Te))
+			{
+				return Remove((Te)remove);
+			}
+			else return false;
+		}
 
 		public void RemoveAll()
 		{
-            foreach (Te cell in cells)
-            {
+			foreach (Te cell in cells)
+			{
 				cell.ID = 0;
 				cell.ParentTable = null;
 				cell.ActivateCellRemoved();
-            }
+			}
 
 			cells.Clear();
 
@@ -160,10 +178,10 @@ namespace TablesLibrary.Interpreter.Table
 				{
 					return cells[cells.Count - 1];
 				}
-                else
-                {
+				else
+				{
 					return DefaultCell;
-                }
+				}
 			}
 		}
 
@@ -246,21 +264,21 @@ namespace TablesLibrary.Interpreter.Table
 
 			TableCellAttribute attribute = (TableCellAttribute)Attribute.GetCustomAttribute(typeof(Te), typeof(TableCellAttribute));
 			String savename;
-            if (attribute == null)
-            {
+			if (attribute == null)
+			{
 				savename = typeof(Te).Name;
 			}
-            else
-            {
+			else
+			{
 				savename = attribute.DataSaveName;
 			}
 			return export + "<Table: " + savename + ">\n";
 		}
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
+		IEnumerator IEnumerable.GetEnumerator()
+		{
 			return GetEnumerator();
-        }
+		}
 
 		private TableEnum<Te> GetEnumerator()
 		{
@@ -268,16 +286,16 @@ namespace TablesLibrary.Interpreter.Table
 		}
 	}
 
-    internal class TableEnum<T> : IEnumerator where T : TableCell.Cell, new()
+	internal class TableEnum<T> : IEnumerator where T : TableCell.Cell, new()
 	{
 		private IEnumerator enumerator;
 
-        public TableEnum(ObservableCollection<T> table)
-        {
+		public TableEnum(ObservableCollection<T> table)
+		{
 			this.enumerator = table.GetEnumerator();
-        }
+		}
 		public object Current => enumerator.Current;
 		public bool MoveNext() => enumerator.MoveNext();
 		public void Reset() => enumerator.Reset();
-    }
+	}
 }

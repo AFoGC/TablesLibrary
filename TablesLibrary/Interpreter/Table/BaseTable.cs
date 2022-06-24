@@ -11,7 +11,7 @@ using TablesLibrary.Interpreter.TableCell;
 
 namespace TablesLibrary.Interpreter.Table
 {
-    public abstract class BaseTable : INotifyCollectionChanged, IBaseTable
+    public abstract class BaseTable : INotifyCollectionChanged
     {
         protected int id = 0;
         protected String name = "";
@@ -74,9 +74,6 @@ namespace TablesLibrary.Interpreter.Table
 		public abstract void LoadTable(StreamReader streamReader, Comand comand);
         public abstract void ConnectionsSubload(TableCollection tablesCollection);
         public virtual void PresaveChages(TableCollection tablesCollection) { }
-
-        public abstract bool AddElement(Cell cell);
-        public abstract bool Remove(Cell remove);
 
         public abstract Type DataType { get; }
     }
