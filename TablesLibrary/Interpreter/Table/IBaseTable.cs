@@ -11,6 +11,5 @@ namespace TablesLibrary.Interpreter.Table
     {
         bool Remove(Cell remove);
         bool AddElement(Cell cell);
-        bool AddElement();
     }
 }
