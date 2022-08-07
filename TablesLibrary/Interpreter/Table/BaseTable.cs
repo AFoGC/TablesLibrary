@@ -19,24 +19,14 @@ namespace TablesLibrary.Interpreter.Table
 
         public int ID
 		{
-			get { return id; }
-            set
-            {
-                if (id == 0)
-                {
-                    id = value;
-                }
-                else
-                {
-                    throw new Exception("Cant change id if it != 0");
-                }
-            }
+			get => id;
+            internal set => id = value;
 		}
 
 		public String Name
 		{
-			get { return name; }
-			set { name = value; }
+			get => name;
+			set => name = value;
 		}
 
         private TableCollection tableCollection;

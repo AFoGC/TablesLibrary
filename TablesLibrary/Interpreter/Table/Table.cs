@@ -210,6 +210,11 @@ namespace TablesLibrary.Interpreter.Table
 			streamWriter.WriteLine();
 		}
 
+		protected virtual void loadBody(Comand comand)
+        {
+
+        }
+
 		public override void LoadTable(StreamReader streamReader, Comand comand)
 		{
 			this.RemoveAll();
@@ -244,8 +249,8 @@ namespace TablesLibrary.Interpreter.Table
 							case "Table":
 								endReading = true;
 								break;
-
 							default:
+								loadBody(comand);
 								break;
 						}
 					}
