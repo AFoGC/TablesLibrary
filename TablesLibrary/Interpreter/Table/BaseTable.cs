@@ -14,6 +14,7 @@ namespace TablesLibrary.Interpreter.Table
     public abstract class BaseTable : INotifyCollectionChanged
     {
         protected int id = 0;
+        
         protected String name = "";
 
         public int ID

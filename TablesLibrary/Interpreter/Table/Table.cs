@@ -185,13 +185,18 @@ namespace TablesLibrary.Interpreter.Table
 			}
 		}
 
+		protected virtual void saveBody(StreamWriter streamWriter)
+        {
+
+        }
+
 		public override void SaveTable(StreamWriter streamWriter)
 		{
 			streamWriter.Write(this.tableDeclaration(0));
 			streamWriter.Write(Cell.FormatParam(nameof(id), id, 0, 1));
-			streamWriter.Write(Cell.FormatParam(nameof(name), name, "", 1));
+			streamWriter.Write(Cell.FormatParam(nameof(name), name, string.Empty, 1));
 
-			//TableCellAttribute attribute = (TableCellAttribute)Attribute.GetCustomAttribute(typeof(Te), typeof(TableCellAttribute));
+			saveBody(streamWriter);
 
 			Te defCell = new Te();
 
