@@ -41,7 +41,10 @@ namespace TablesLibrary.Interpreter.TableCell
 
 		public ITable ParentTable { get; internal set; }
 
-		protected abstract void updateThisBody(Cell cell);
+		protected virtual void updateThisBody(Cell cell)
+		{
+
+		}
 		protected virtual void loadBody(Comand comand)
 		{
 			Type thisType = this.GetType();
