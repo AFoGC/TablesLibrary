@@ -36,11 +36,6 @@ namespace TablesLibrary.Interpreter.Table
 			return cells.ToArray();
 		}
 
-		private void Table_CellPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			TableCollection.TableChanged();
-		}
-
 		private void Cells_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			OnCollectionChanged(e);

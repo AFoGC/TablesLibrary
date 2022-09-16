@@ -24,10 +24,12 @@ namespace TablesLibrary.Interpreter
 		public event EventHandler CellInTablesChanged;
 
         public Encoding FileEncoding { get; set; }
+		public bool IsInfoUnsaved { get; internal set; }
 
 		public TableCollection()
 		{
 			FileEncoding = Encoding.Default;
+			IsInfoUnsaved = false;
 		}
 
         public TableCollection(String tableFilePath) : this()
@@ -37,6 +39,7 @@ namespace TablesLibrary.Interpreter
 
 		internal void TableChanged()
         {
+			IsInfoUnsaved = true;
 			EventHandler handler = CellInTablesChanged;
 			if (handler != null)
 				handler(this, EventArgs.Empty);
@@ -142,6 +145,8 @@ namespace TablesLibrary.Interpreter
 
 			this.ConnectionsSubload();
 
+			IsInfoUnsaved = false;
+
 			EventHandler handler = TableLoad;
 			if (null != handler) handler(this, EventArgs.Empty);
 
@@ -170,6 +175,7 @@ namespace TablesLibrary.Interpreter
 				sw.WriteLine("<DocEnd>");
 			}
 
+			IsInfoUnsaved = false;
 			EventHandler handler2 = TableSave;
 			if (null != handler2) handler2(this, EventArgs.Empty);
 		}

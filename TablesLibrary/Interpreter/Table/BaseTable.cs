@@ -5,13 +5,14 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using TablesLibrary.Interpreter.TableCell;
 
 namespace TablesLibrary.Interpreter.Table
 {
-    public abstract class BaseTable : INotifyCollectionChanged
+    public abstract class BaseTable : INotifyCollectionChanged, INotifyPropertyChanged
     {
         protected int id = 0;
         
@@ -48,12 +49,19 @@ namespace TablesLibrary.Interpreter.Table
         }
 
         public event NotifyCollectionChangedEventHandler CollectionChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         internal void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             NotifyCollectionChangedEventHandler handler = CollectionChanged;
             if (handler != null)
                 handler(this, e);
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            InCollectionChanged();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         internal void InCollectionChanged()
