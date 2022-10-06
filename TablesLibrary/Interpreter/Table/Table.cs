@@ -280,6 +280,8 @@ namespace TablesLibrary.Interpreter.Table
 			return export + "<Table: " + savename + ">\n";
 		}
 
+		public bool Contains(Te item) => cells.Contains(item);
+
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
