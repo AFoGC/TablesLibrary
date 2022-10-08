@@ -12,7 +12,7 @@ using TablesLibrary.Interpreter.TableCell;
 
 namespace TablesLibrary.Interpreter.Table
 {
-	public abstract class Table<Te> : BaseTable, IEnumerable, ITable where Te : Cell, new()
+	public abstract class Table<Te> : BaseTable, IEnumerable, IEnumerable<Te>, ITable where Te : Cell, new()
 	{
 		protected ObservableCollection<Te> cells = new ObservableCollection<Te>();
 
@@ -284,25 +284,12 @@ namespace TablesLibrary.Interpreter.Table
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return GetEnumerator();
+			return cells.GetEnumerator();
 		}
 
-		private TableEnum<Te> GetEnumerator()
+		public IEnumerator<Te> GetEnumerator()
 		{
-			return new TableEnum<Te>(cells);
+			return cells.GetEnumerator();
 		}
-	}
-
-	internal class TableEnum<T> : IEnumerator where T : TableCell.Cell, new()
-	{
-		private IEnumerator enumerator;
-
-		public TableEnum(ObservableCollection<T> table)
-		{
-			this.enumerator = table.GetEnumerator();
-		}
-		public object Current => enumerator.Current;
-		public bool MoveNext() => enumerator.MoveNext();
-		public void Reset() => enumerator.Reset();
 	}
 }
