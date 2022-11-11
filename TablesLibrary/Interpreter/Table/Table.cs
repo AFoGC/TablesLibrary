@@ -69,12 +69,18 @@ namespace TablesLibrary.Interpreter.Table
 			get { return cells.Count; }
 		}
 
+		private bool AddLoadedElement(Te import)
+		{
+            import.ParentTable = this;
+            cells.Add(import);
+
+            return true;
+        }
 
 		public bool AddElement(Te import)
 		{
 			import.ID = ++counter;
-			import.ParentTable = this;
-			cells.Add(import);
+			AddLoadedElement(import);
 
 			return true;
 		}
@@ -229,7 +235,7 @@ namespace TablesLibrary.Interpreter.Table
 					{
 						Te cell = new Te();
 						cell.loadCell(streamReader, comand);
-						this.AddElement(cell);
+						this.AddLoadedElement(cell);
 					}
 					else
 					{
