@@ -11,7 +11,7 @@ using TablesLibrary.Interpreter.Table;
 
 namespace TablesLibrary.Interpreter.TableCell
 {
-	public abstract class Cell : INotifyPropertyChanged
+	public abstract class Cell : ICell
 	{
 		[Field("id")]
 		private int id = 0;

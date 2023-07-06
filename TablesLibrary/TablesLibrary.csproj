@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interpreter\TableCell\CellEvents.cs" />
+    <Compile Include="Interpreter\TableCell\ICell.cs" />
     <Compile Include="Interpreter\TableCell\TableCellAttribute.cs" />
     <Compile Include="Interpreter\TableCell\FieldAttribute.cs" />
     <Compile Include="Interpreter\Table\BaseTable.cs" />
